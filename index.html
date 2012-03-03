@@ -1,0 +1,29 @@
+<html>
+	<head>
+        <script type="text/javascript">
+            var result;
+
+            function success(position) {
+                result.innerHTML = "Lat: " + position.coords.latitude + "<br/ >" + 
+                    "Long: " + position.coords.longitude + "<br/ >" + 
+                    "Speed: " + position.coords.speed + "<br/ >" +
+                    "Altitude: " + position.coords.altitude;
+            }
+
+            function onReady() {
+                //register for gps
+                navigator.geolocation.watchPosition(success, null, {frequency: 500});
+            }
+
+            //register for ready
+            window.addEventListener("load", function () {
+                result = document.getElementById("result"); 
+                window.addEventListener("deviceready", onReady);
+            });
+        </script>
+	</head>
+    <body>
+        <div id="result"></div>
+    </body>
+</html>
+
