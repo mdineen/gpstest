@@ -10,11 +10,6 @@
             var destlon = -118.408413;
 
             function success(position) {
-                //result.innerHTML = "Lat: " + position.coords.latitude + "<br/ >" +
-                //    "Long: " + position.coords.longitude + "<br/ >" +
-                //    "Speed: " + position.coords.speed + "<br/ >" +
-                //    "Altitude: " + position.coords.altitude;
-
                 var alt = position.coords.altitude;
                 var lat = position.coords.latitude;
                 var lon = position.coords.longitude;
@@ -24,7 +19,7 @@
                 lblhdg.innerHTML = ((h < 10) ? "00" : ((h < 100) ? "0" : "")) + h.toString() + "&deg;";
                 var b = Math.round(GetHeading(lat, lon, destlat, destlon, v));
                 lblbrg.innerHTML = ((b < 10) ? "00" : ((b < 100) ? "0" : "")) + b.toString() + "&deg;";
-                var s = Math.round(position.coords.speed * 1.94384449);
+                var s = Math.round(position.coords.speed * 1.94384449); // m/s to kt
                 lblspd.innerHTML = s + " kt";
                 var d = Math.round(GetDistance(lat, lon, destlat, destlon))
                 lbldist.innerHTML = d + " nm";
