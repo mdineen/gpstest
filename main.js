@@ -5,15 +5,13 @@
 	const R = 3960; //radius of the earth in nm
 
 	//members
-	var dest = "cnp4";
-	var destlat = 44.157671;
-	var destlon = -81.062622;
+	var dest, destlat, destlon;
 
 	function success(position) {
 		var alt = position.coords.altitude;
 		var lat = position.coords.latitude;
 		var lon = position.coords.longitude;
-		var v = Math.round(GetDeclination(lat, lon))*-1;
+		var v = Math.round(getdeclination(lat, lon))*-1;
 
 		var h = Math.round(position.coords.heading) + v;
 		lblhdg.innerHTML = ((h < 10) ? "00" : ((h < 100) ? "0" : "")) + h.toString() + "&deg;";
