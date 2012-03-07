@@ -1,11 +1,9 @@
 ﻿function simulatetravel(lat, lon, hdg, dist)
 {
-	var lat1 = lat;
-	var lon1 = lon;
-	var brng = rads(hdg);
-	var d = dist;
-	var lat2 = Math.asin((Math.sin(lat1)*Math.cos(d/R)) + (Math.cos(lat1)*Math.sin(d/R)*Math.cos(brng)));
-	var lon2 = lon1 + Math.atan2(Math.sin(brng)*Math.sin(d/R)*Math.cos(lat1), Math.cos(d/R)-Math.sin(lat1)*Math.sin(lat2));
-debugpanel.innerText = lat2 + "\r\n" + lon2 + "\r\n" + brng;
-	return new point(lat2,lon2);
+	var lat1 = rads(lat), lon1 = rads(lon), brng = rads(hdg), angularDistance = dist / R;
+	var lat2 = Math.asin(Math.sin(lat1) * Math.cos(angularDistance) + Math.cos(lat1) * Math.sin(angularDistance) * Math.cos(brng));
+	var lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(angularDistance) * Math.cos(lat1), Math.cos(angularDistance) - Math.sin(lat1) * Math.sin(lat2));
+	lon2 = (lon2 + 3 * Math.PI) % (2 * Math.PI) - Math.PI; // Normalise to -180..+180
+	
+	return new point(deg(lat2),deg(lon2));
 }

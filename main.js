@@ -55,8 +55,8 @@
 
 	function btn1_click()
 	{
-		var nll = simulatetravel(airportdata["CYKF"].Lat,airportdata["CYKF"].Lon, 270, 11)
-
+		var nll = simulatetravel(airportdata["CYKF"].Lat,airportdata["CYKF"].Lon, 320, 11)
+debugpanel.innerText = nll.Lat + ',' + nll.Lon;
 		/*
 		var nearest = getnearest("CYKF",15);
 		//alert(nearest.length);
