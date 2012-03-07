@@ -1,0 +1,33 @@
+div {
+	font-family: Arial, Helvetica;
+	font-size: 16pt;
+	color: black;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.title {
+	font-size: 10pt;
+}
+
+div.borders{
+	border: 3px solid black;
+}
+
+div.dialogbox{
+	border: 2px solid black; 
+	padding: 15px; 
+	width: 85%; 
+	height: 85%; 
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	background-color: white;
+	text-align: center;
+	vertical-align: middle;
+}
+
+div.tightform{
+	font-size: 12pt;
+}

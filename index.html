@@ -12,20 +12,8 @@
     <script src="Helpers/getheading.js"></script>
     <script src="Helpers/simulatetravel.js"></script>
     <script src="main.js"></script>
-    
-        <style type="text/css">
-            div {
-                font-family: Arial, Helvetica;
-                font-size: 16pt;
-                color: black;
-                text-align: center;
-                vertical-align: middle;
-            }
-            .title {font-size: 10pt;}
-            div.borders{
-                border: 3px solid black;
-            }
-        </style>
+
+    <LINK REL="StyleSheet" HREF="default.css" TYPE="text/css" />
 	</head>
     <body>
         <div id="main">
@@ -54,10 +42,16 @@
                     <div id="lblete">00:00:00</div>
                 </div>
             </div>
-            <div id="buttonpanel" style="{}width: 100%; height: 15%;}">
-                <input type="text" id="txt1" /><input type="submit" id="btn1" onclick="btn1_click()" value="APT DTA" />
+            <div id="buttonpanel" style="{width: 100%; height: 15%;}">
+              <input type="submit" id="btnGoTo" onclick="btnGoTo_click()" value="GO TO" />
+              <input type="text" id="txt1" /><input type="submit" id="btn1" onclick="btn1_click()" value="APT DTA" />
             </div>
           <div id="debugpanel"></div>
+          <div id="gotodialog" class="dialogbox">
+            <div id="gotopanel" class="tightform">
+              DEST ID:<input type="text" id="txtgoto" /><input type="submit" id="btnnavigate" onclick="btnnavigate_click()" value="Navigate" /><input type="submit" id="btngotocancel" onclick="btngotocancel_click()" value="Cancel" />
+            </div>
+          </div>
         </div>
     </body>
 </html>
