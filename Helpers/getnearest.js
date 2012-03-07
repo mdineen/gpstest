@@ -9,6 +9,8 @@ function getnearestlatlon(lat, lon, radiusnm)
 	var degpernmlat = 0.016666;
 	var degpernmlon = degreeslongitudepermile(lat);
 
+	if(radiusnm > 999){radiusnm = 999;}
+
 	var withinlat = [];
 	for (var l in latcode)
 	{
@@ -30,15 +32,26 @@ function getnearestlatlon(lat, lon, radiusnm)
 		{ if(withinrect.length > 0){break;} }
 	}
 
-	var nearest = {};
+	var nearestunsorted = {};
+	var distsorted = [];
 	for (var i = 0; i < withinrect.length; ++i)
 	{
-		var dist = GetDistance(lat, lon, airportdata[withinrect[i]].Lat, airportdata[withinrect[i]].Lon).toFixed(1);
+		var dist = getdistance(lat, lon, airportdata[withinrect[i]].Lat, airportdata[withinrect[i]].Lon).toFixed(1);
 		if(dist > 0 && dist < radiusnm)
 		{
-			nearest[dist] = withinrect[i];
+			var d = ((dist < 10) ? "00" : ((dist < 100) ? "0" : "")) + dist.toString();
+			nearestunsorted[d] = withinrect[i];
+			distsorted.push(d);
 		}
 	}
-	alert(nearest.length);
+
+	distsorted.sort();
+
+	var nearest = {};
+	for (var i = 0; i < distsorted.length; ++i)
+	{
+		nearest[distsorted[i]] = nearestunsorted[distsorted[i]];
+	}
+
 	return nearest;
 }
