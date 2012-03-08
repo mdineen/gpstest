@@ -31,3 +31,7 @@ div.dialogbox{
 div.tightform{
 	font-size: 12pt;
 }
+
+select.listbox{
+    width: 95%;
+}

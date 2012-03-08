@@ -11,14 +11,17 @@
     <script src="Helpers/getdeclination.js"></script>
     <script src="Helpers/getheading.js"></script>
     <script src="Helpers/simulatetravel.js"></script>
+    <script src="Helpers/airportdata.searchcode.js"></script>
+    <script src="Helpers/paintlist.js"></script>
     <script src="main.js"></script>
 
     <LINK REL="StyleSheet" HREF="default.css" TYPE="text/css" />
 	</head>
     <body>
         <div id="main">
-            <div id="destinfo" class="title borders" style="{width: 100%; height: 15%;}">
-                DEST: <div class="title" id="lbldest">----</div>
+            <div id="destinfo" class="borders" style="{width: 100%; height: 15%;}">
+                <span class="title">DEST:</span>
+                <div id="lbldest">---</div>
             </div>
             <div id="navscreen" style="{width: 100%; height: 70%;}">
                 <div id="navhdgtile" class="borders" style="{width: 100%; height: 20%;}">
@@ -42,14 +45,18 @@
                     <div id="lblete">00:00:00</div>
                 </div>
             </div>
-            <div id="buttonpanel" style="{width: 100%; height: 15%;}">
-              <input type="submit" id="btnGoTo" onclick="btnGoTo_click()" value="GO TO" />
+            <div id="buttonpanel" class="borders" style="{width: 100%; height: 15%;}">
+                <input type="submit" id="btnGoTo" onclick="btnGoTo_click()" value="GO TO" />
+                <input type="submit" id="btnNrst" onclick="btnNrst_click()" value="NRST" />
+                <input type="submit" id="btnStop" onclick="btnStop_click()" value="STOP" />
               <input type="text" id="txt1" /><input type="submit" id="btn1" onclick="btn1_click()" value="APT DTA" />
             </div>
           <div id="debugpanel"></div>
           <div id="gotodialog" class="dialogbox">
             <div id="gotopanel" class="tightform">
-              DEST ID:<input type="text" id="txtgoto" /><input type="submit" id="btnnavigate" onclick="btnnavigate_click()" value="Navigate" /><input type="submit" id="btngotocancel" onclick="btngotocancel_click()" value="Cancel" />
+              DEST ID:<input type="text" id="txtgoto" onkeyup="txtgoto_keyup()" /><br />
+                <select id="lstairports" class="listbox" size="10" /><br />
+              <input type="submit" id="btnnavigate" onclick="btnnavigate_click()" value="Navigate" /><input type="submit" id="btngotocancel" onclick="btngotocancel_click()" value="Cancel" />
             </div>
           </div>
         </div>

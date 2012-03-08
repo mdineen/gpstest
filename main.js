@@ -1,16 +1,16 @@
 ﻿	//controls
-	var lbldest, lblhdg, lblbrg, lblspd, lbldist, lblete, txt1, debugpanel, gotodialog, txtgoto;
+	var lbldest, lblhdg, lblbrg, lblspd, lbldist, lblete, txt1, debugpanel, gotodialog, txtgoto, lstairportslstairports, btnnrst, btnStop;
 
 	//constant
 	const R = 3960; //radius of the earth in nm
 
 	//members
-	var dest = "---", destlat, destlon, enroute = false;
+	var lat, lon, dest = "---", destlat, destlon, enroute = false;
 
 	function success(position) {
 		var alt = position.coords.altitude;
-		var lat = position.coords.latitude;
-		var lon = position.coords.longitude;
+		lat = position.coords.latitude;
+		lon = position.coords.longitude;
 		var v = Math.round(getdeclination(lat, lon));
 
 		var h = Math.round(position.coords.heading) + v;
@@ -22,7 +22,7 @@
 
 		if(enroute)
 		{
-			lbldest.innerText = dest.toUpperCase();
+			lbldest.innerHTML = dest.toUpperCase();
 			var b = Math.round(GetHeading(lat, lon, destlat, destlon, v));
 			if(!isNaN(b))
 			{ lblbrg.innerHTML = ((b < 10) ? "00" : ((b < 100) ? "0" : "")) + b.toString() + "&deg;"; }
@@ -35,8 +35,15 @@
 			var em = ete.getUTCMinutes();
 			var es = ete.getUTCSeconds();
 			if(!isNaN(eh)&&!isNaN(em)&&!isNaN(es))
-			{ lblete.innerText = (eh < 10 ? "0" : "") + eh + ":" + (em < 10 ? "0" : "") + em + ":" + (es < 10 ? "0" : "") + es; }
+			{ lblete.innerHTML = (eh < 10 ? "0" : "") + eh + ":" + (em < 10 ? "0" : "") + em + ":" + (es < 10 ? "0" : "") + es; }
 		}
+        else
+        {
+            lbldest.innerHTML = "---";
+            lblbrg.innerHTML = "---&deg;";
+            lbldist.innerHTML = "0 nm";
+            lblete.innerHTML = "00:00:00"
+        }
 	}
 
 	function onReady() {
@@ -56,6 +63,9 @@
 		debugpanel = document.getElementById("debugpanel");
 		gotodialog = document.getElementById("gotodialog");
 		txtgoto = document.getElementById("txtgoto");
+        lstairports = document.getElementById("lstairports");
+        btnnrst = document.getElementById("btnnrst");
+        btnStop = document.getElementById("btnStop");
 		window.addEventListener("deviceready", onReady);
 		initialize();
 	});
@@ -66,21 +76,50 @@
 		gotodialog.style.top = window.innerHeight *.07;
 		gotodialog.style.left = window.innerWidth *.07;
 		gotodialog.style.visibility = "hidden";
+
+
 	}
 
 	function btn1_click()
-	{ }
-
-	function btnGoTo_click()
 	{
-		gotodialog.style.visibility = "visible";
+        var position = {};
+        position.coords = {};
+        position.coords.altitude = 300;
+        position.coords.latitude = 43.458028;
+        position.coords.longitude = -80.384145;
+        position.coords.heading = 320;
+        position.coords.speed = 54;
+        success(position);
+    }
+
+    function btnGoTo_click()
+	{
+        paintlistcode("");
+        gotodialog.style.visibility = "visible";
 		txtgoto.value = "";
+        txtgoto.disabled = false;
 		txtgoto.focus();
 	}
 
+    function btnNrst_click()
+    {
+        paintlistnearest();
+        gotodialog.style.visibility = "visible";
+        txtgoto.value = "";
+        txtgoto.disabled = true;
+    }
+
+    function btnStop_click()
+    {
+        dest = "---";
+        destlat = null;
+        destlon = null;
+        enroute = false;
+    }
+
 	function btnnavigate_click()
 	{
-		var d = txtgoto.value.toUpperCase();
+        var d = lstairports.options[lstairports.options.selectedIndex].value;
 		if(airportdata[d] != undefined)
 		{
 			dest = d; 
@@ -95,3 +134,8 @@
 	{
 		gotodialog.style.visibility = "hidden";
 	}
+
+    function txtgoto_keyup()
+    {
+        paintlistcode(txtgoto.value.toUpperCase());
+    }
