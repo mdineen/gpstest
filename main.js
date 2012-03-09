@@ -1,17 +1,8 @@
-﻿	//controls
-	var lbldest, lblhdg, lblbrg, lblspd, lbldist, lblete, txt1, debugpanel, gotodialog, txtgoto, lstairportslstairports, btnnrst, btnStop;
-
-	//constant
-	const R = 3960; //radius of the earth in nm
-
-	//members
-	var lat, lon, dest = "---", destlat, destlon, enroute = false;
-
-	function success(position) {
-		var alt = position.coords.altitude;
+﻿	function success(position) {
+		alt = (position.coords.altitude * 3.2808).toFixed(0);
 		lat = position.coords.latitude;
 		lon = position.coords.longitude;
-		var v = Math.round(getdeclination(lat, lon));
+		v = Math.round(getdeclination(lat, lon));
 
 		var h = Math.round(position.coords.heading) + v;
 		if(!isNaN(h))
@@ -19,16 +10,18 @@
 		var s = Math.round(position.coords.speed * 1.94384449); // m/s to kt
 		if(!isNaN(s))
 		{ lblspd.innerHTML = s + " kt"; }
+        if(!isNaN(alt))
+        { lblalt.innerHTML = alt + " ft"; }
 
 		if(enroute)
 		{
-			lbldest.innerHTML = dest.toUpperCase();
+			lbldest.innerHTML = dest.toUpperCase() + " - " + airportdata[dest.toUpperCase()].Name;
 			var b = Math.round(GetHeading(lat, lon, destlat, destlon, v));
 			if(!isNaN(b))
 			{ lblbrg.innerHTML = ((b < 10) ? "00" : ((b < 100) ? "0" : "")) + b.toString() + "&deg;"; }
-			var d = Math.round(getdistance(lat, lon, destlat, destlon))
+			var d = getdistance(lat, lon, destlat, destlon);
 			if(!isNaN(d))
-			{ lbldist.innerHTML = d + " nm"; }
+			{ lbldist.innerHTML = d.toFixed(1) + " nm"; }
 			var ete = new Date();
 			ete.setTime(d/s*3600000);
 			var eh = ete.getUTCHours();
@@ -36,6 +29,9 @@
 			var es = ete.getUTCSeconds();
 			if(!isNaN(eh)&&!isNaN(em)&&!isNaN(es))
 			{ lblete.innerHTML = (eh < 10 ? "0" : "") + eh + ":" + (em < 10 ? "0" : "") + em + ":" + (es < 10 ? "0" : "") + es; }
+            var xtd = getcrosstrack();
+            if(!isNaN(xtd))
+            { lblxtk.innerHTML = xtd.toFixed(1) + " nm"; }
 		}
         else
         {
@@ -48,8 +44,18 @@
 
 	function onReady() {
 		//register for gps
-		navigator.geolocation.watchPosition(success, null, {frequency: 500});
+		navigator.geolocation.watchPosition(success, null, {frequency: 500, enableHighAccuracy: true});
 	}
+
+    //controls
+    var lbldest, lblhdg, lblbrg, lblspd, lbldist, lblete, debugpanel, gotodialog, txtgoto,
+        lstairports, lblalt, lblxtk, txtalt, txthdg, txtspd;
+
+    //constant
+    const R = 3960; //radius of the earth in nm
+
+    //members
+    var lat, lon, v, dest = "---", destlat, destlon, enroute = false, originlat, originlon, alt;
 
 	//register for ready
 	window.addEventListener("load", function () {
@@ -58,14 +64,16 @@
 		lblbrg = document.getElementById("lblbrg");
 		lblspd = document.getElementById("lblspd");
 		lbldist = document.getElementById("lbldist");
-		lblete = document.getElementById("lblete");
-		txt1 = document.getElementById("txt1");
+        lblete = document.getElementById("lblete");
+        lblalt = document.getElementById("lblalt");
 		debugpanel = document.getElementById("debugpanel");
 		gotodialog = document.getElementById("gotodialog");
 		txtgoto = document.getElementById("txtgoto");
         lstairports = document.getElementById("lstairports");
-        btnnrst = document.getElementById("btnnrst");
-        btnStop = document.getElementById("btnStop");
+        lblxtk = document.getElementById("lblxtk");
+        txtalt = document.getElementById("txtalt");
+        txthdg = document.getElementById("txthdg");
+        txtspd = document.getElementById("txtspd");
 		window.addEventListener("deviceready", onReady);
 		initialize();
 	});
@@ -80,15 +88,23 @@
 
 	}
 
-	function btn1_click()
+	function btnfire_click()
 	{
+        if(isNaN(lat) || isNaN(lon))
+        {
+            lat = airportdata.CYKF.Lat;
+            lon = airportdata.CYKF.Lon;
+            v = airportdata.CYKF.Decl;
+        }
+
         var position = {};
         position.coords = {};
-        position.coords.altitude = 300;
-        position.coords.latitude = 43.458028;
-        position.coords.longitude = -80.384145;
-        position.coords.heading = 320;
-        position.coords.speed = 54;
+        position.coords.altitude = txtalt.value / 3.2808;
+        var newpoint = simulatetravel(lat, lon, txthdg.value - v, 5/60*txtspd.value);
+        position.coords.latitude = newpoint.Lat;
+        position.coords.longitude = newpoint.Lon;
+        position.coords.heading = txthdg.value - v;
+        position.coords.speed = txtspd.value / 1.94384449;
         success(position);
     }
 
@@ -126,6 +142,8 @@
 			destlat = airportdata[d].Lat;
 			destlon = airportdata[d].Lon;
 			enroute = true;
+            originlat = lat;
+            originlon = lon;
 		}
 		gotodialog.style.visibility = "hidden";
 	}

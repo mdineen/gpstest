@@ -13,43 +13,84 @@
     <script src="Helpers/simulatetravel.js"></script>
     <script src="Helpers/airportdata.searchcode.js"></script>
     <script src="Helpers/paintlist.js"></script>
+    <script src="Helpers/getcrosstrack.js"></script>
     <script src="main.js"></script>
 
     <LINK REL="StyleSheet" HREF="default.css" TYPE="text/css" />
 	</head>
-    <body>
-        <div id="main">
+    <body style="{text-align: center;}">
+        <div id="main" style="{width: 40%;}">
             <div id="destinfo" class="borders" style="{width: 100%; height: 15%;}">
                 <span class="title">DEST:</span>
                 <div id="lbldest">---</div>
             </div>
             <div id="navscreen" style="{width: 100%; height: 70%;}">
-                <div id="navhdgtile" class="borders" style="{width: 100%; height: 20%;}">
-                    <span class="title">HEADING</span><br/>
-                    <div id="lblhdg">---&deg;</div>
-                </div>
-                <div id="navbrgtile" class="borders" style="{width: 100%; height: 20%;}">
-                    <span class="title">BEARING</span><br/>
-                    <div id="lblbrg">---&deg;</div>
-                </div>
-                <div id="navspdtile" class="borders" style="{width: 100%; height: 20%;}">
-                    <span class="title">GROUND SPEED</span><br/>
-                    <div id="lblspd">0 kt</div>
-                </div>
-                <div id="navdisttile" class="borders" style="{width: 100%; height: 20%;}">
-                    <span class="title">DISTANCE NEXT</span><br/>
-                    <div id="lbldist">0 nm</div>
-                </div>
-                <div id="navetetile" class="borders" style="{width: 100%; height: 20%;}">
-                    <span class="title">ETE NEXT</span><br/>
-                    <div id="lblete">00:00:00</div>
-                </div>
+                <table width="100%" height="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="navtile">
+                            <div id="navhdgtile" class="borders navtile">
+                                <span class="title">HEADING</span><br/>
+                                <div id="lblhdg">---&deg;</div>
+                            </div>
+                        </td>
+                        <td class="navtile">
+                            <div id="navbrgtile" class="borders navtile">
+                                <span class="title">BEARING</span><br/>
+                                <div id="lblbrg">---&deg;</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="navtile">
+                            <div id="navspdtile" class="borders navtile">
+                                <span class="title">GROUND SPEED</span><br/>
+                                <div id="lblspd">0 kt</div>
+                            </div>
+                        </td>
+                        <td class="navtile">
+                            <div id="navdisttile" class="borders navtile">
+                                <span class="title">DISTANCE NEXT</span><br/>
+                                <div id="lbldist">0 nm</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="navtile">
+                            <div id="navetetile" class="borders navtile">
+                                <span class="title">ETE NEXT</span><br/>
+                                <div id="lblete">00:00:00</div>
+                            </div>
+                        </td>
+                        <td class="navtile">
+                            <div id="navalttile" class="borders navtile">
+                                <span class="title">ALTITUDE</span><br/>
+                                <div id="lblalt">0 ft</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="navtile">
+                            <div id="navxtktile" class="borders navtile">
+                                <span class="title">X-TRACK</span><br/>
+                                <div id="lblxtk">0 nm</div>
+                            </div>
+                        </td>
+                        <td class="navtile">
+                            <div id="navsimtile" class="borders navtile">
+                                <span class="title">SIM CONTROL</span><br/>
+                                HDG:<input type="text" id="txthdg" value="320"/><br/>
+                                SPD:<input type="text" id="txtspd" value="95"/><br/>
+                                ALT:<input type="text" id="txtalt" value="2500"/><br/>
+                                <input type="submit" id="btnfire" onclick="btnfire_click()" value="FIRE" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div id="buttonpanel" class="borders" style="{width: 100%; height: 15%;}">
                 <input type="submit" id="btnGoTo" onclick="btnGoTo_click()" value="GO TO" />
                 <input type="submit" id="btnNrst" onclick="btnNrst_click()" value="NRST" />
                 <input type="submit" id="btnStop" onclick="btnStop_click()" value="STOP" />
-              <input type="text" id="txt1" /><input type="submit" id="btn1" onclick="btn1_click()" value="APT DTA" />
             </div>
           <div id="debugpanel"></div>
           <div id="gotodialog" class="dialogbox">

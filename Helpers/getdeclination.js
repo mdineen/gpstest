@@ -4,14 +4,14 @@
         for(var i = 2; i < 1000; i += 2)
         {
             nrst = getnearestlatlon(lat, lon, i);
-            var match = false;
+
             for(var n in nrst)
             {
                 nrstdecl = airportdata[nrst[n]].Decl;
-                match = true;
                 break;
             }
-            break;
+            if(nrstdecl != undefined)
+            { break; }
         }
         return nrstdecl;
     }
