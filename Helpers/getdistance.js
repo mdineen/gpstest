@@ -5,6 +5,6 @@
 		var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(rad(lat1)) *
 				Math.cos(rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
 		var c = 2 * Math.asin(Math.sqrt(a));
-		var d = R * c;
+		var d = instance.R * c;
 		return d * 0.868976242 ;
 	}
