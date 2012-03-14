@@ -3,13 +3,13 @@
         instance.nav.lat = position.coords.latitude;
         instance.nav.lon = position.coords.longitude;
         instance.nav.v = Math.round(getdeclination(instance.nav.lat, instance.nav.lon));
+		instance.nav.hdg = Math.round(position.coords.heading) + instance.nav.v;
+        instance.nav.spd = Math.round(position.coords.speed * 1.94384449); // m/s to kt
 
-		var h = Math.round(position.coords.heading) + instance.nav.v;
-		if(!isNaN(h))
-		{ instance.ctrl.lblhdg.innerHTML = ((h < 10) ? "00" : ((h < 100) ? "0" : "")) + h.toString() + "&deg;"; }
-		var s = Math.round(position.coords.speed * 1.94384449); // m/s to kt
-		if(!isNaN(s))
-		{ instance.ctrl.lblspd.innerHTML = s + " kt"; }
+		if(!isNaN(instance.nav.hdg))
+		{ instance.ctrl.lblhdg.innerHTML = ((instance.nav.hdg < 10) ? "00" : ((instance.nav.hdg < 100) ? "0" : "")) + instance.nav.hdg.toString() + "&deg;"; }
+		if(!isNaN(instance.nav.spd))
+		{ instance.ctrl.lblspd.innerHTML = instance.nav.spd + " kt"; }
         if(!isNaN(instance.nav.alt))
         { instance.ctrl.lblalt.innerHTML = instance.nav.alt + " ft"; }
 
@@ -23,7 +23,7 @@
 			if(!isNaN(d))
 			{ instance.ctrl.lbldist.innerHTML = d.toFixed(1) + " nm"; }
 			var ete = new Date();
-			ete.setTime(d/s*3600000);
+			ete.setTime(d/instance.nav.speed*3600000);
 			var eh = ete.getUTCHours();
 			var em = ete.getUTCMinutes();
 			var es = ete.getUTCSeconds();
@@ -38,13 +38,25 @@
             instance.ctrl.lbldest.innerHTML = "---";
             instance.ctrl.lblbrg.innerHTML = "---&deg;";
             instance.ctrl.lbldist.innerHTML = "0 nm";
-            instance.ctrl.lblete.innerHTML = "00:00:00"
+            instance.ctrl.lblete.innerHTML = "00:00:00";
+
+            instance.nav.dest = "---";
+
         }
 	}
+
+    function accelerometerSuccess(g)
+    {
+        instance.nav.acc = parseFloat(g.y).toFixed(2); //((g.x > g.y && g.x > g.z) ? g.x : (g.y > g.x && g.y > g.z) ? g.y : g.z).toFixed(2);  //trying to work with this mess, not sure how the devices perform.  Looking for the axis with the force being applied to it...
+        instance.ctrl.lblacc.innerHTML = instance.nav.acc + " g";
+    }
 
 	function onReady() {
 		//register for gps
 		navigator.geolocation.watchPosition(success, null, {frequency: 500, enableHighAccuracy: true});
+
+        //register for accelerometer
+        navigator.accelerometer.watchAcceleration(accelerometerSuccess,null,{frequency: 500});
 	}
 
 	//register for ready
@@ -53,27 +65,11 @@
 		initialize();
 	});
 
-    var instance
+    var instance = null;
     function initialize() {
-        instance = new main(null, null);
-        instance.ctrl = new instance.ctrl(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
-        instance.nav = new instance.nav(null,null,null,null,null,null,null,null,null,null);
-
-        instance.ctrl.lbldest = document.getElementById("lbldest");
-        instance.ctrl.lblhdg = document.getElementById("lblhdg");
-        instance.ctrl.lblbrg = document.getElementById("lblbrg");
-        instance.ctrl.lblspd = document.getElementById("lblspd");
-        instance.ctrl.lbldist = document.getElementById("lbldist");
-        instance.ctrl.lblete = document.getElementById("lblete");
-        instance.ctrl.lblalt = document.getElementById("lblalt");
-        instance.ctrl.debugpanel = document.getElementById("debugpanel");
-        instance.ctrl.gotodialog = document.getElementById("gotodialog");
-        instance.ctrl.txtgoto = document.getElementById("txtgoto");
-        instance.ctrl.lstairports = document.getElementById("lstairports");
-        instance.ctrl.lblxtk = document.getElementById("lblxtk");
-        instance.ctrl.txtalt = document.getElementById("txtalt");
-        instance.ctrl.txthdg = document.getElementById("txthdg");
-        instance.ctrl.txtspd = document.getElementById("txtspd");
+        instance = new main();
+        instance.ctrl = new instance.ctrl();
+        instance.nav = new instance.nav();
 
         instance.nav.dest = "---";
         instance.nav.enroute = false;
@@ -105,6 +101,10 @@
         position.coords.heading = instance.ctrl.txthdg.value - instance.nav.v;
         position.coords.speed = instance.ctrl.txtspd.value / 1.94384449;
         success(position);
+
+        var acceleration = {};
+        acceleration.y = instance.ctrl.txtacc.value;
+        accelerometerSuccess(acceleration);
     }
 
     function btnGoTo_click()

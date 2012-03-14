@@ -25,7 +25,7 @@
                 <span class="title">DEST:</span>
                 <div id="lbldest">---</div>
             </div>
-            <div id="navscreen" style="{width: 100%; height: 70%;}">
+            <div id="navscreen" style="{width: 100%; height: 65%;}">
                 <table width="100%" height="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td class="navtile">
@@ -77,11 +77,20 @@
                             </div>
                         </td>
                         <td class="navtile">
+                            <div id="navacctile" class="borders navtile">
+                                <span class="title">ACCELERATION</span><br/>
+                                <div id="lblacc">1 g</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="navtile">
                             <div id="navsimtile" class="borders navtile">
                                 <span class="title">SIM CONTROL</span><br/>
-                                HDG:<input type="text" id="txthdg" value="320"/><br/>
+                                HDG:<input type="text" id="txthdg" value="320"/>
                                 SPD:<input type="text" id="txtspd" value="95"/><br/>
-                                ALT:<input type="text" id="txtalt" value="2500"/><br/>
+                                ALT:<input type="text" id="txtalt" value="2500"/>
+                                G:<input type="text" id="txtacc" value="1"/>
                                 <input type="submit" id="btnfire" onclick="btnfire_click()" value="FIRE" />
                             </div>
                         </td>

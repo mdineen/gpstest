@@ -1,37 +1,40 @@
-function main(ctrl, nav)
+function main()
 {
-    this.ctrl = function (lbldest,lblhdg,lblbrg,lblspd,lbldist,lblete,lblalt,debugpanel,gotodialog,txtgoto,lstairports,
-        lblxtk,txtalt,txthdg,txtspd)
+    this.ctrl = function ()
     {
-        this.lbldest = lbldest;
-            this.lblhdg = lblhdg;
-            this.lblbrg = lblbrg;
-            this.lblspd = lblspd;
-            this.lbldist = lbldist;
-            this.lblete = lblete;
-            this.lblalt = lblalt;
-            this.debugpanel = debugpanel;
-            this.gotodialog = gotodialog;
-            this.txtgoto = txtgoto;
-            this.lstairports = lstairports;
-            this.lblxtk = lblxtk;
-            this.txtalt = txtalt;
-            this.txthdg = txthdg;
-            this.txtspd = txtspd;
-
+        this.lbldest = document.getElementById("lbldest");
+        this.lblhdg = document.getElementById("lblhdg");
+        this.lblbrg = document.getElementById("lblbrg");
+        this.lblspd = document.getElementById("lblspd");
+        this.lbldist = document.getElementById("lbldist");
+        this.lblete = document.getElementById("lblete");
+        this.lblalt = document.getElementById("lblalt");
+        this.debugpanel = document.getElementById("debugpanel");
+        this.gotodialog = document.getElementById("gotodialog");
+        this.txtgoto = document.getElementById("txtgoto");
+        this.lstairports = document.getElementById("lstairports");
+        this.lblxtk = document.getElementById("lblxtk");
+        this.txtalt = document.getElementById("txtalt");
+        this.txthdg = document.getElementById("txthdg");
+        this.txtspd = document.getElementById("txtspd");
+        this.lblacc = document.getElementById("lblacc");
+        this.txtacc = document.getElementById("txtacc");
     };
-    this.nav = function(alt,lat,lon,v,enroute,dest,destlat,destlon,originlat,originlon)
+    this.nav = function()
     {
-        this.alt = alt;
-        this.lat = lat;
-        this.lon = lon;
-        this.v = v;
-        this.enroute = enroute;
-        this.dest = dest;
-        this.destlat = destlat;
-        this.destlon = destlon;
-        this.originlat = originlat;
-        this.originlon = originlon;
+        this.alt = null;
+        this.lat = null;
+        this.lon = null;
+        this.v = null;
+        this.hdg = null;
+        this.spd = null;
+        this.acc = null;
+        this.enroute = null;
+        this.dest = null;
+        this.destlat = null;
+        this.destlon = null;
+        this.originlat = null;
+        this.originlon = null;
     };
 }
 
