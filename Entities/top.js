@@ -19,6 +19,7 @@ function main()
         this.txtspd = document.getElementById("txtspd");
         this.lblacc = document.getElementById("lblacc");
         this.txtacc = document.getElementById("txtacc");
+        this.lblvsi = document.getElementById("lblvsi");
     };
     this.nav = function()
     {
@@ -29,12 +30,16 @@ function main()
         this.hdg = null;
         this.spd = null;
         this.acc = null;
+        this.vs = null;
         this.enroute = null;
         this.dest = null;
         this.destlat = null;
         this.destlon = null;
         this.originlat = null;
         this.originlon = null;
+        this.lastalt = null;
+        this.timestamp = null;
+        this.lasttimestamp = null;
     };
 }
 

@@ -1,10 +1,17 @@
 ﻿	function success(position) {
+        instance.nav.lastalt = instance.nav.alt != null ? instance.nav.alt : (position.coords.altitude * 3.2808).toFixed(0);
         instance.nav.alt = (position.coords.altitude * 3.2808).toFixed(0);
+        instance.nav.lasttimestamp = instance.nav.timestamp != null ? instance.nav.timestamp : new Date().setUTCMilliseconds(position.timestamp);
+        instance.nav.timestamp = new Date().setUTCMilliseconds(position.timestamp);
+        var ft = instance.nav.alt - instance.nav.lastalt;
+        var min = (instance.nav.timestamp/60000) - (instance.nav.lasttimestamp/60000);
+        instance.nav.vs = parseFloat(ft / (min == 0 ? 1 : min)).toFixed(0);
         instance.nav.lat = position.coords.latitude;
         instance.nav.lon = position.coords.longitude;
         instance.nav.v = Math.round(getdeclination(instance.nav.lat, instance.nav.lon));
 		instance.nav.hdg = Math.round(position.coords.heading) + instance.nav.v;
         instance.nav.spd = Math.round(position.coords.speed * 1.94384449); // m/s to kt
+
 
 		if(!isNaN(instance.nav.hdg))
 		{ instance.ctrl.lblhdg.innerHTML = ((instance.nav.hdg < 10) ? "00" : ((instance.nav.hdg < 100) ? "0" : "")) + instance.nav.hdg.toString() + "&deg;"; }
@@ -12,6 +19,8 @@
 		{ instance.ctrl.lblspd.innerHTML = instance.nav.spd + " kt"; }
         if(!isNaN(instance.nav.alt))
         { instance.ctrl.lblalt.innerHTML = instance.nav.alt + " ft"; }
+        if(!isNaN(instance.nav.vs))
+        { instance.ctrl.lblvsi.innerHTML = instance.nav.vs + " ft/min" }
 
 		if(instance.nav.enroute)
 		{
@@ -23,7 +32,8 @@
 			if(!isNaN(d))
 			{ instance.ctrl.lbldist.innerHTML = d.toFixed(1) + " nm"; }
 			var ete = new Date();
-			ete.setTime(d/instance.nav.speed*3600000);
+			ete.setTime(d/instance.nav.spd*3600000);
+
 			var eh = ete.getUTCHours();
 			var em = ete.getUTCMinutes();
 			var es = ete.getUTCSeconds();
@@ -100,6 +110,7 @@
         position.coords.longitude = newpoint.Lon;
         position.coords.heading = instance.ctrl.txthdg.value - instance.nav.v;
         position.coords.speed = instance.ctrl.txtspd.value / 1.94384449;
+        position.timestamp = new Date().getUTCMilliseconds();
         success(position);
 
         var acceleration = {};
