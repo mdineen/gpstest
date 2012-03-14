@@ -1,4 +1,5 @@
-﻿function simulatetravel(lat, lon, hdg, dist)
+﻿//simulates travel for 5 minutes at the values specified in the sim box
+function simulatetravel(lat, lon, hdg, dist)
 {
 	var lat1 = rad(lat), lon1 = rad(lon), brng = rad(hdg), angularDistance = dist / instance.R;
 	var lat2 = Math.asin(Math.sin(lat1) * Math.cos(angularDistance) + Math.cos(lat1) * Math.sin(angularDistance) * Math.cos(brng));

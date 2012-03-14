@@ -99,7 +99,7 @@
         var position = {};
         position.coords = {};
         position.coords.altitude = instance.ctrl.txtalt.value / 3.2808;
-        var newpoint = simulatetravel(instance.nav.lat, instance.nav.lon, instance.ctrl.txthdg.value - instance.nav.v, 5/60*instance.ctrl.txtspd.value);
+        var newpoint = simulatetravel(instance.nav.lat, instance.nav.lon, instance.ctrl.txthdg.value, 5/60*instance.ctrl.txtspd.value);
         position.coords.latitude = newpoint.Lat;
         position.coords.longitude = newpoint.Lon;
         position.coords.heading = instance.ctrl.txthdg.value - instance.nav.v;
