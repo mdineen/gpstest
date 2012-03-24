@@ -1,4 +1,4 @@
-﻿	function success(position) {
+﻿	function onSuccess(position) {
         instance.nav.lastalt = instance.nav.alt != null ? instance.nav.alt : (position.coords.altitude * 3.2808).toFixed(0);
         instance.nav.alt = (position.coords.altitude * 3.2808).toFixed(0);
         instance.nav.lasttimestamp = instance.nav.timestamp != null ? instance.nav.timestamp : new Date().setUTCMilliseconds(position.timestamp);
@@ -62,12 +62,25 @@
     }
 
 	function onReady() {
-		//register for gps
-		navigator.geolocation.watchPosition(success, null, {frequency: 500, enableHighAccuracy: true});
-
         //register for accelerometer
         navigator.accelerometer.watchAcceleration(accelerometerSuccess,null,{frequency: 500});
-	}
+
+		//register for gps
+        navigator.geolocation.watchPosition(function(){ /* do nothing */ });
+        onSuccessTimerLoop();
+    }
+
+    function onSuccessTimerLoop()
+    {
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, {'enableHighAccuracy':true,'timeout':1000,'maximumAge':1000});
+        var t=setTimeout('onSuccessTimerLoop()', 1000);
+    }
+
+    function onError(error)
+    {
+        var element = document.getElementById('geolocation');
+        element.style.color = "Red";
+    }
 
 	//register for ready
 	window.addEventListener("load", function () {
@@ -111,7 +124,7 @@
         position.coords.heading = instance.ctrl.txthdg.value - instance.nav.v;
         position.coords.speed = instance.ctrl.txtspd.value / 1.94384449;
         position.timestamp = new Date().getUTCMilliseconds();
-        success(position);
+        onSuccess(position);
 
         var acceleration = {};
         acceleration.y = instance.ctrl.txtacc.value;
