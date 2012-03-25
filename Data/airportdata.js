@@ -1,3 +1,7 @@
+/*
+This large file is a simple object containing basic airport data for all airports in North America.
+Should be replaced with a websql database for devices with less ram, but this is faster
+ */
 var airportdata = {
 	"00AK" : new airport("00AK","LOWELL FIELD",59.85611,-151.6961,450,0),
 	"00AL" : new airport("00AL","EPPS AIRPARK",34.86472,-86.77,820,0),
