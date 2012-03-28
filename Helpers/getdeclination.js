@@ -4,7 +4,7 @@ Magnetic declination or magnetic variance is the correction one must apply to co
  need to know the exact position of the magnetic pole on the true graticule to calculate this on the fly, which I don't.  Luckily,
  FAA and NavCanada have us covered.  Just get the variance at the nearest airport.
  */
-	function getdeclination(lat, lon){
+	helpers.getdeclination = function(lat, lon){
         var nrst = {};
         var nrstdecl;
         //starting with a 2-mile radius and going up in increments of 2 miles if you don't find any airports, get me the magnetic
@@ -15,7 +15,7 @@ Magnetic declination or magnetic variance is the correction one must apply to co
         // 2x2 into maybe 15x15...
         for(var i = 2; i < 1000; i += 2)
         {
-            nrst = getnearestlatlon(lat, lon, i);
+            nrst = helpers.getnearestlatlon(lat, lon, i);
 
             for(var n in nrst)
             {

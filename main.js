@@ -24,7 +24,7 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
         instance.nav.vs = parseFloat(ft / (min == 0 ? 1 : min)).toFixed(0); //ft over min
         instance.nav.lat = position.coords.latitude;
         instance.nav.lon = position.coords.longitude;
-        instance.nav.v = Math.round(getdeclination(instance.nav.lat, instance.nav.lon));
+        instance.nav.v = Math.round(helpers.getdeclination(instance.nav.lat, instance.nav.lon));
 		instance.nav.hdg = Math.round(position.coords.heading) + instance.nav.v;
         instance.nav.spd = Math.round(position.coords.speed * 1.94384449); // m/s to kt factor.
 
@@ -46,11 +46,11 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
             //Destination airport code and name, nice and prominent
             instance.ctrl.lbldest.innerHTML = instance.nav.dest.toUpperCase() + " - " + airportdata[instance.nav.dest.toUpperCase()].Name;
             //Show the bearing to the destination, if you can get one - don't forget about v - magnetic variance (google "true virgins make dull companions")
-			var b = Math.round(GetHeading(instance.nav.lat, instance.nav.lon, instance.nav.destlat, instance.nav.destlon, instance.nav.v));
+			var b = Math.round(helpers.getHeading(instance.nav.lat, instance.nav.lon, instance.nav.destlat, instance.nav.destlon, instance.nav.v));
 			if(!isNaN(b))
 			{ instance.ctrl.lblbrg.innerHTML = ((b < 10) ? "00" : ((b < 100) ? "0" : "")) + b.toString() + "&deg;"; }
             //how far to go?
-			var d = getdistance(instance.nav.lat, instance.nav.lon, instance.nav.destlat, instance.nav.destlon);
+			var d = helpers.getdistance(instance.nav.lat, instance.nav.lon, instance.nav.destlat, instance.nav.destlon);
 			if(!isNaN(d))
 			{ instance.ctrl.lbldist.innerHTML = d.toFixed(1) + " nm"; }
             //how long will it take??
@@ -64,7 +64,7 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
 			{ instance.ctrl.lblete.innerHTML = (eh < 10 ? "0" : "") + eh + ":" + (em < 10 ? "0" : "") + em + ":" + (es < 10 ? "0" : "") + es; }
             //Show how far we need to go to get back on the track line.  This will even work if you are flying totally
             // the wrong way.  Pretty cool!
-            var xtd = getcrosstrack();
+            var xtd = helpers.getcrosstrack();
             if(!isNaN(xtd))
             { instance.ctrl.lblxtk.innerHTML = xtd.toFixed(1) + " nm"; }
 		}
@@ -150,6 +150,9 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
 
 	}
 
+    //scope limiter for my big helper objects
+    var helpers = { };
+
     //calls simulatetravel for a five minute flight.  We always begin at Mark's home airport.
 	function btnfire_click()
 	{
@@ -163,7 +166,7 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
         var position = {};
         position.coords = {};
         position.coords.altitude = instance.ctrl.txtalt.value / 3.2808;
-        var newpoint = simulatetravel(instance.nav.lat, instance.nav.lon, instance.ctrl.txthdg.value, 5/60*instance.ctrl.txtspd.value);
+        var newpoint = helpers.simulatetravel(instance.nav.lat, instance.nav.lon, instance.ctrl.txthdg.value, 5/60*instance.ctrl.txtspd.value);
         position.coords.latitude = newpoint.Lat;
         position.coords.longitude = newpoint.Lon;
         position.coords.heading = instance.ctrl.txthdg.value - instance.nav.v;
@@ -178,7 +181,7 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
 
     function btnGoTo_click()
 	{
-        paintlistcode("");
+        helpers.paintlistcode("");
         instance.ctrl.gotodialog.style.visibility = "visible";
         instance.ctrl.txtgoto.value = "";
         instance.ctrl.txtgoto.disabled = false;
@@ -187,7 +190,7 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
 
     function btnNrst_click()
     {
-        paintlistnearest();
+        helpers.paintlistnearest();
         instance.ctrl.gotodialog.style.visibility = "visible";
         instance.ctrl.txtgoto.value = "";
         instance.ctrl.txtgoto.disabled = true;
@@ -223,5 +226,5 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
 
     function txtgoto_keyup()
     {
-        paintlistcode(instance.ctrl.txtgoto.value.toUpperCase());
+        helpers.paintlistcode(instance.ctrl.txtgoto.value.toUpperCase());
     }

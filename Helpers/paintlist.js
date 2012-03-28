@@ -7,19 +7,19 @@ These are UI helpers for the two methods to list airports in the v1 app.  For th
 
 //This guy gets called on the onKeyUp event of the search text box.  He finds airports that you could possibly mean
 // and puts just enough in your results box so you don't have to scroll
-function paintlistcode(s) {
+helpers.paintlistcode = function(s) {
     var apts = airportdata.searchcode(s, instance.ctrl.lstairports.size);
-    paintlist(apts);
+    helpers.paintlist(apts);
 }
 //This fella lists the nearest airports.  He goes 15x15.  Maybe that's what I should do for the variance method...
-function paintlistnearest()
+helpers.paintlistnearest = function()
 {
     var nrst = {};
     //To avoid immediate calls to the nearest method with a 1000-mile radius, we start at 15nm and go out by 15nm per loop until
     // we fill that airports list.  Woohoo!
     for(var i = 15; i < 1000; i += 15)
     {
-        nrst = getnearestlatlon(instance.nav.lat, instance.nav.lon, i);
+        nrst = helpers.getnearestlatlon(instance.nav.lat, instance.nav.lon, i);
         //this is a call to my potentially evil extension method on the mighty Object.  Looking for commentary from
         // Mike L on this one...
         if (Object.size(nrst) >= instance.ctrl.lstairports.size)
@@ -34,9 +34,9 @@ function paintlistnearest()
         apts.push(nrst[n]);
     }
 
-    paintlist(apts);
+    helpers.paintlist(apts);
 }
-function paintlist(apts)
+helpers.paintlist = function(apts)
 {
     // loop through the arg, which is an array of airport codes sent to us in the order we are to paint them.
     for (var i = 0; i < apts.length; ++i) {
@@ -48,7 +48,8 @@ function paintlist(apts)
         // Then, I really want to know how far it is.  Other than the bearing in degrees, which wouldn't really be all
         // that useful in a pinch (unless you're facing weather... hmm, think about that some more) that's all I care
         // about.  If I'm up north and I'm running low on gas maybe the ETE at current speed.
-        n.text = apts[i] + " - " + airportdata[apts[i]].Name + " (" + getdistance(instance.nav.lat, instance.nav.lon, airportdata[apts[i]].Lat, airportdata[apts[i]].Lon).toFixed(2) + " NM)";
+        n.text = apts[i] + " - " + airportdata[apts[i]].Name + " (" + helpers.getdistance(instance.nav.lat, instance.nav.lon,
+            airportdata[apts[i]].Lat, airportdata[apts[i]].Lon).toFixed(2) + " NM)";
         n.value = apts[i];
         instance.ctrl.lstairports.options[i] = n;
     }

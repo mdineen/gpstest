@@ -9,7 +9,7 @@ One minute of latitude is one nautical mile.  This is a constant on the surface 
   but that's for a later version.  This formula gives you an approximate value for degreeslongitudepermile, so that you can scribe
   the rectangle discussed in GetNearest().  I needed to put more and more breakpoints in to better express the curve at extreme latitudes
  */
-function degreeslongitudepermile(latitude) {
+ helpers.degreeslongitudepermile = function(latitude) {
     //Approximate number of degrees of longitude per nautical mile at given intervals of latitude
 	var latdegpernm = {
 		0 : 0.016666,

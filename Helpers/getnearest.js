@@ -6,10 +6,10 @@ GetNearest.  The hallmark of any halfass decent Aviation GPS.  The ability to qu
  give me all there is to know about the airports by being near the airports database.
  */
 //Why doesn't js do overloads?  This is just an overload.  Airport code because the caller is too lazy to look up the lat/lon himself
-function getnearest(code, radiusnm)
+helpers.getnearest = function(code, radiusnm)
 {
 	var a = airportdata[code];
-	return getnearestlatlon(a.Lat, a.Lon, radiusnm);
+	return helpers.getnearestlatlon(a.Lat, a.Lon, radiusnm);
 }
 
 //Function basically draws a band around the world over a small swath of latitude and grabs all the airport codes it has for the
@@ -18,12 +18,12 @@ function getnearest(code, radiusnm)
 // whose longitude lies within it.  That virturectangle is about 50% wider than it needs to be just to be sure that the next step
 // doesn't miss anything.  We then scribe a circle with a radius of [radiusnm] and return an array of the airports within the
 // circle in ascending order of distance.
-function getnearestlatlon(lat, lon, radiusnm)
+helpers.getnearestlatlon = function(lat, lon, radiusnm)
 {
     //There are 0.0166... (1/60) degrees per nautical mile of latitude everywhere on our planet
 	var degpernmlat = 0.016666;
     //See the helper method for an explanation of why this is necessary
-	var degpernmlon = degreeslongitudepermile(lat);
+	var degpernmlon = helpers.degreeslongitudepermile(lat);
 
     //never search more than 999 nm, that's too much.  A couple of those would be a DOS on your device
 	if(radiusnm > 999){radiusnm = 999;}
@@ -61,7 +61,7 @@ function getnearestlatlon(lat, lon, radiusnm)
 	for (var i = 0; i < withinrect.length; ++i)
 	{
         //Get the distance of each airport
-		var dist = getdistance(lat, lon, airportdata[withinrect[i]].Lat, airportdata[withinrect[i]].Lon).toFixed(1);
+		var dist = helpers.getdistance(lat, lon, airportdata[withinrect[i]].Lat, airportdata[withinrect[i]].Lon).toFixed(1);
 		if(dist > 0 && dist < radiusnm)
 		{
 			var d = ((dist < 10) ? "00" : ((dist < 100) ? "0" : "")) + dist.toString();

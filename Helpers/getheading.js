@@ -7,12 +7,12 @@ Why would you need a function like this???  Doesn't the HTML5 GeoCaching API pro
 
  Like the getDistance() function, I borrow this math from an ancient chap named Euclid.  Public domain smarts below.
  */
-	function GetHeading(lat1, lon1, lat2, lon2, v)
+	helpers.getHeading = function(lat1, lon1, lat2, lon2, v)
 	{
-		var dLon = rad(lon2-lon1);
-		var llat1 = rad(lat1);
-		var llat2 = rad(lat2);
+		var dLon = helpers.rad(lon2-lon1);
+		var llat1 = helpers.rad(lat1);
+		var llat2 = helpers.rad(lat2);
 		var y = Math.sin(dLon) * Math.cos(llat2);
 		var x = Math.cos(llat1) * Math.sin(llat2) - Math.sin(llat1) * Math.cos(llat2) * Math.cos(dLon)
-		return (deg(Math.atan2(y,x)) + 360) % 360;
+		return (helpers.deg(Math.atan2(y,x)) + 360) % 360;
 	}
