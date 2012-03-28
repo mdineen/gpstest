@@ -39,6 +39,19 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
         //Same as above.
         if(!isNaN(instance.nav.vs))
         { instance.ctrl.lblvsi.innerHTML = instance.nav.vs + " ft/min" }
+        //show local and UTC times
+        if(instance.nav.timestamp != null)
+        {
+            // This pile of ternary statements is my terse-as-I-can-manage equivalent of ("HH:mm:ss"), if you get me.
+            var hh = instance.nav.timestamp.getHours();
+            var mm = instance.nav.timestamp.getMinutes();
+            var ss = instance.nav.timestamp.getSeconds();
+            instance.ctrl.lbllcltime.innerHTML = ((hh < 10) ? "0" : "") + hh.toString() +  ":" + ((mm < 10) ? "0" : "") + mm.toString() + ":" + ((ss < 10) ? "0" : "") + ss.toString();
+            var uh = instance.nav.timestamp.getUTCHours();
+            var um = instance.nav.timestamp.getUTCMinutes();
+            var us = instance.nav.timestamp.getUTCSeconds();
+            instance.ctrl.lblutctime.innerHTML = ((uh < 10) ? "0" : "") + uh.toString() +  ":" + ((um < 10) ? "0" : "") + um.toString() + ":" + ((us < 10) ? "0" : "") + us.toString();
+        }
 
         //if enroute is set, it means we're on a nav leg.  Do the deed with that data too
 		if(instance.nav.enroute)

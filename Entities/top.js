@@ -43,6 +43,10 @@ function main()
         this.txtacc = document.getElementById("txtacc");
         //VSI (vertical speed indicator) label
         this.lblvsi = document.getElementById("lblvsi");
+        //Local time label
+        this.lbllcltime = document.getElementById("lbllcltime");
+        //UTC time label
+        this.lblutctime = document.getElementById("lblutctime");
     };
     this.nav = function()
     {
