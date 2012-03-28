@@ -12,15 +12,15 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
 //The magic method.  This guy fires every time the GPS gives us new data.  We update the current and last values in
 // the instance instance (get it?), and paint our nav UI.
 	function onSuccess(position) {
-        //Update teh instance
+        //Update the instance
         instance.nav.lastalt = instance.nav.alt != null ? instance.nav.alt : (position.coords.altitude * 3.2808).toFixed(0);
         instance.nav.alt = (position.coords.altitude * 3.2808).toFixed(0);
-        instance.nav.lasttimestamp = instance.nav.timestamp != null ? instance.nav.timestamp : new Date().setUTCMilliseconds(position.timestamp);
-        instance.nav.timestamp = new Date().setUTCMilliseconds(position.timestamp);
+        instance.nav.lasttimestamp = instance.nav.timestamp != null ? instance.nav.timestamp : new Date(position.timestamp);
+        instance.nav.timestamp = new Date(position.timestamp);
         //This was a little trying until I remembered that we're basically talking the DST triangle.  I wans S, and I
         // need D and T.  S is in ft/min.  So, put ft over min
         var ft = instance.nav.alt - instance.nav.lastalt; //how many feet of altitude did I climb/descent since last time I got data?
-        var min = (instance.nav.timestamp/60000) - (instance.nav.lasttimestamp/60000); //how long since I last got data?
+        var min = (instance.nav.timestamp.getTime()/60000) - (instance.nav.lasttimestamp.getTime()/60000); //how long since I last got data?
         instance.nav.vs = parseFloat(ft / (min == 0 ? 1 : min)).toFixed(0); //ft over min
         instance.nav.lat = position.coords.latitude;
         instance.nav.lon = position.coords.longitude;
@@ -171,7 +171,10 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
         position.coords.longitude = newpoint.Lon;
         position.coords.heading = instance.ctrl.txthdg.value - instance.nav.v;
         position.coords.speed = instance.ctrl.txtspd.value / 1.94384449;
-        position.timestamp = new Date().getUTCMilliseconds();
+        //if the instance timestamp is null, make it the current date.
+        if(instance.nav.timestamp == null)
+        { instance.nav.timestamp = new Date(); }
+        position.timestamp = instance.nav.timestamp.getTime() + 300000;
         onSuccess(position);
 
         var acceleration = {};
