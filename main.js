@@ -9,6 +9,10 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
  and finally I set up my instance and register for all my events.  Good fun.  Enjoy your read.
  */
 
+/*
+    I add this comment as this will be the first touch from VS11.  Hope it's awesome.
+*/
+
 //The magic method.  This guy fires every time the GPS gives us new data.  We update the current and last values in
 // the instance instance (get it?), and paint our nav UI.
 	function onSuccess(position) {
