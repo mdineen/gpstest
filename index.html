@@ -1,6 +1,8 @@
 <html>
 	<head>
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <script src="lib/jquery-min.js"></script>
+    <script src="lib/jquery.json-2.3.min.js"></script>
     <script src="Entities/airport.js"></script>
     <script src="Entities/point.js"></script>
     <script src="Entities/top.js"></script>
@@ -102,7 +104,11 @@
                             </div>
                         </td>
                         <td class="navtile">
-                            &nbsp;
+                            <div id="logtile" class="borders navtile">
+                                <span class="title">LOGGER</span><br />
+                                <input type="submit" id="btnlog" onclick="btnlog_click()" value="START" /><div id="lbllogsize"></div><br />
+                                <input type="submit" id="btnupload" onclick="btnupload_click()" value="UPLOAD" />
+                            </div>
                         </td>
                     </tr>
                     <tr>

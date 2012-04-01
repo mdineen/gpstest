@@ -32,7 +32,7 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
 		instance.nav.hdg = Math.round(position.coords.heading) + instance.nav.v;
         instance.nav.spd = Math.round(position.coords.speed * 1.94384449); // m/s to kt factor.
 
-        //blarg!!  My BB handhelds don't give heading (hehe) or speed.  Gotta figure it out by using this and last position
+	    //blarg!!  My BB handhelds don't give heading (hehe) or speed.  Gotta figure it out by using this and last position
 		if(!isNaN(instance.nav.hdg))
 		{ instance.ctrl.lblhdg.innerHTML = ((instance.nav.hdg < 10) ? "00" : ((instance.nav.hdg < 100) ? "0" : "")) + instance.nav.hdg.toString() + "&deg;"; }
         if(!isNaN(instance.nav.spd))
@@ -97,6 +97,16 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
             instance.nav.dest = "---";
 
         }
+
+	    //are we logging?  
+		if (instance.nav.logging)
+		{
+            //push the current position to the log
+		    instance.nav.tracklog.push(position);
+
+		    //update the log size label
+            instance.ctrl.lbllogsize.innerHTML = instance.nav.tracklog.length.toString() + " item(s)"
+		}
 	}
 
     //Yeah baby.  This is the g load.  I can't wait to test this on the real me.  I told Rob he could learn to fly
@@ -153,6 +163,8 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
 
         instance.nav.dest = "---";
         instance.nav.enroute = false;
+
+        instance.nav.logging = false;
 
         //radius of the earth in nm.  When we add the ability to switch units for sailors and other nancy-types we will
         // get this from a user preference as a key for an enum somewhere in the entities folder, no doubt.
@@ -247,4 +259,53 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
     function txtgoto_keyup()
     {
         helpers.paintlistcode(instance.ctrl.txtgoto.value.toUpperCase());
+    }
+
+    function btnlog_click()
+    {
+        //if there's a log in memory and we're not currently logging, clear it out before starting again
+        if (!instance.nav.logging) {
+            instance.nav.tracklog = [];
+        }
+
+        //toggle the state
+        instance.nav.logging = !instance.nav.logging;
+
+        //update the button text
+        if (instance.nav.logging)
+        { instance.ctrl.btnlog.value = "STOP"; }
+        else
+        { instance.ctrl.btnlog.value = "START"; }
+    }
+
+    function btnupload_click()
+    {
+        //make sure there's something to upload
+        if (instance.nav.tracklog.length > 0)
+        {
+            instance.ctrl.btnupload.disabled = true;
+            instance.ctrl.btnupload.value = "UPLOADING...";
+
+            var toupload = jQuery.toJSON(instance.nav.tracklog);
+
+            var cl = new XMLHttpRequest();
+            cl.open("POST", "http://m.ykfhangar.com/gps/", false);
+            cl.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            cl.setRequestHeader("Content-length", toupload.length);
+            cl.setRequestHeader("Connection", "close");
+
+            try {
+                cl.send("trackdata=" + toupload);
+            }
+            catch (ex) {
+                if (ex.toString().indexOf("101") > 0) {
+                    //do nothing
+                }
+                else { alert(ex); }
+            }
+            finally {
+                instance.ctrl.btnupload.disabled = false;
+                instance.ctrl.btnupload.value = "UPLOAD";
+            }
+        }
     }

@@ -47,6 +47,12 @@ function main()
         this.lbllcltime = document.getElementById("lbllcltime");
         //UTC time label
         this.lblutctime = document.getElementById("lblutctime");
+        //logging button
+        this.btnlog = document.getElementById("btnlog");
+        //upload log button
+        this.btnupload = document.getElementById("btnupload");
+        //log size label
+        this.lbllogsize = document.getElementById("lbllogsize");
     };
     this.nav = function()
     {
@@ -82,6 +88,10 @@ function main()
         this.timestamp = null;
         //previous GPS timestamp (for time-related calculations, time since last GPS position/altitude)
         this.lasttimestamp = null;
+        //bool for logging
+        this.logging = null;
+        //object for current log
+        this.tracklog = [];
     };
 }
 
