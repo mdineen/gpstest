@@ -1,8 +1,0 @@
-<qnx>
-    <author>mdineen</author>
-    <authorId></authorId>
-    <category>core.all</category>
-    <action>read_geolocation</action>
-    <buildId>1</buildId>
-    <platformVersion>0.1.0.0</platformVersion>
-</qnx>
