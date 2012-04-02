@@ -15,7 +15,10 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
 
 //The magic method.  This guy fires every time the GPS gives us new data.  We update the current and last values in
 // the instance instance (get it?), and paint our nav UI.
-	function onSuccess(position) {
+function onSuccess(position) {
+        //clear weak signal dialog
+        if (instance.ctrl.weaksignaldialog.style.visibility == 'visible')
+        { instance.ctrl.weaksignaldialog.style.visibility = 'hidden'; }
         //Update the instance
         instance.nav.lastalt = instance.nav.alt != null ? instance.nav.alt : (position.coords.altitude * 3.2808).toFixed(0);
         instance.nav.alt = (position.coords.altitude * 3.2808).toFixed(0);
@@ -123,7 +126,8 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
 
 	function onReady() {
         //register for accelerometer
-        navigator.accelerometer.watchAcceleration(accelerometerSuccess,null,{frequency: 500});
+	    if (navigator.accelerometer != undefined)
+	    { navigator.accelerometer.watchAcceleration(accelerometerSuccess, null, { frequency: 500 }); }
 
 		//register for gps -- this will keep the radio hot but because the playbook doesn't respond to the timeout
 		// argument the same as the handhelds this is the only way I can figure to get a GPS position update on a
@@ -136,16 +140,13 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
     {
         //TimerLoop gives us a setTimeout function.  I'm told this doesn't upset the apple cart by blocking the CPU
         // while the second passes by.  Hope the guy was right, or this is a baaaad way to do this...
-        navigator.geolocation.getCurrentPosition(onSuccess, onError, {'enableHighAccuracy':true,'timeout':1000,'maximumAge':1000});
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, {'enableHighAccuracy':true,'timeout':2000,'maximumAge':1000});
         var t=setTimeout('onSuccessTimerLoop()', 1000);
     }
 
     function onError(error)
     {
-        //This is probably not even an element.  Build this out into something fancy to show the user.  Big red box.
-        // "NOT READY TO NAVIGATE, PLEASE STANDYBY".  If in flight and signal is lost: "OH SHIT".
-        var element = document.getElementById('geolocation');
-        element.style.color = "Red";
+        instance.ctrl.weaksignaldialog.style.visibility = "visible";
     }
 
 	//register for ready
@@ -169,13 +170,6 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
         //radius of the earth in nm.  When we add the ability to switch units for sailors and other nancy-types we will
         // get this from a user preference as a key for an enum somewhere in the entities folder, no doubt.
         instance.R = 3960;
-
-        //set the size of the goto dialog as a big fraction of the browser size, and park the invisible div in the centre
-        instance.ctrl.gotodialog.style.width = window.innerWidth *.85;
-        instance.ctrl.gotodialog.style.height = window.innerHeight *.85;
-        instance.ctrl.gotodialog.style.top = window.innerHeight *.07;
-        instance.ctrl.gotodialog.style.left = window.innerWidth *.07;
-        instance.ctrl.gotodialog.style.visibility = "hidden";
 
 	}
 
@@ -308,4 +302,13 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
                 instance.ctrl.btnupload.value = "UPLOAD";
             }
         }
+    }
+
+    function btnsimboxtoggle_click()
+    {
+        //toggle visibility
+        instance.ctrl.simboxtile.style.visibility = instance.ctrl.simboxtile.style.visibility == "visible" ? "hidden" : "visible";
+
+        //toggle text on button
+        instance.ctrl.btnsimboxtoggle.value = instance.ctrl.btnsimboxtoggle.value == "SHOW SIM" ? "HIDE SIM" : "SHOW SIM";
     }

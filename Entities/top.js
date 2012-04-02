@@ -31,6 +31,8 @@ function main()
         this.lstairports = document.getElementById("lstairports");
         //Cross track distance label
         this.lblxtk = document.getElementById("lblxtk");
+        //sim box
+        this.simboxtile = document.getElementById("simboxtile");
         //Altitude text box from sim box
         this.txtalt = document.getElementById("txtalt");
         //Heading text box from sim box
@@ -53,6 +55,10 @@ function main()
         this.btnupload = document.getElementById("btnupload");
         //log size label
         this.lbllogsize = document.getElementById("lbllogsize");
+        //toggle sim box button
+        this.btnsimboxtoggle = document.getElementById("btnsimboxtoggle");
+        //Dialog box for weak signal
+        this.weaksignaldialog = document.getElementById("weaksignaldialog");
     };
     this.nav = function()
     {

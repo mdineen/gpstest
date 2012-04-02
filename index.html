@@ -1,5 +1,6 @@
 <html>
 	<head>
+        <title>GPSTest</title>
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
     <script src="lib/jquery-min.js"></script>
     <script src="lib/jquery.json-2.3.min.js"></script>
@@ -22,14 +23,14 @@
 
     <LINK REL="StyleSheet" HREF="default.css" TYPE="text/css" />
 	</head>
-    <body style="{text-align: center;}">
-        <div id="main" style="{width: 40%;}">
-            <div id="destinfo" class="borders" style="{width: 100%; height: 15%;}">
+    <body onload="onReady()">
+        <div id="main" class="topcontainer">
+            <div id="destinfo" class="borders">
                 <span class="title">DEST:</span>
                 <div id="lbldest">---</div>
             </div>
-            <div id="navscreen" style="{width: 100%; height: 65%;}">
-                <table width="100%" height="100%" cellpadding="0" cellspacing="0">
+            <div id="navscreen" class="innercontainer">
+                <table class="navpanel">
                     <tr>
                         <td class="navtile">
                             <div id="navhdgtile" class="borders navtile">
@@ -94,50 +95,50 @@
                         <td class="navtile">
                             <div id="navlcltimetile" class="borders navtile">
                                 <span class="title">LCL TIME</span><br/>
-                                <div id="lbllcltime"></div>
+                                <div id="lbllcltime">&nbsp;</div>
                             </div>
                         </td>
                         <td class="navtile">
                             <div id="navutctimetile" class="borders navtile">
                                 <span class="title">UTC TIME</span><br/>
-                                <div id="lblutctime"></div>
+                                <div id="lblutctime">&nbsp;</div>
                             </div>
                         </td>
                         <td class="navtile">
                             <div id="logtile" class="borders navtile">
                                 <span class="title">LOGGER</span><br />
-                                <input type="submit" id="btnlog" onclick="btnlog_click()" value="START" /><div id="lbllogsize"></div><br />
-                                <input type="submit" id="btnupload" onclick="btnupload_click()" value="UPLOAD" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="navtile">
-                            <div id="navsimtile" class="borders navtile">
-                                <span class="title">SIM CONTROL</span><br/>
-                                HDG:<input type="text" id="txthdg" value="320"/>
-                                SPD:<input type="text" id="txtspd" value="95"/><br/>
-                                ALT:<input type="text" id="txtalt" value="2500"/>
-                                G:<input type="text" id="txtacc" value="1"/>
-                                <input type="submit" id="btnfire" onclick="btnfire_click()" value="FIRE" />
+                                <input type="submit" id="btnlog" onclick="btnlog_click()" value="START" /><input type="submit" id="btnupload" onclick="btnupload_click()" value="UPLOAD" />
+                                <div id="lbllogsize" class="smaller" />
                             </div>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div id="buttonpanel" class="borders" style="{width: 100%; height: 15%;}">
+            <div id="buttonpanel" class="borders">
                 <input type="submit" id="btnGoTo" onclick="btnGoTo_click()" value="GO TO" />
                 <input type="submit" id="btnNrst" onclick="btnNrst_click()" value="NRST" />
                 <input type="submit" id="btnStop" onclick="btnStop_click()" value="STOP" />
+                <input type="submit" id="btnsimboxtoggle" onclick="btnsimboxtoggle_click()" value="SHOW SIM" />
+            </div>
+            <div id="simboxtile" class="borders navtile defaulthidden simboxtext">
+                <span class="title">SIM CONTROL</span><br/>
+                HDG:<input type="text" id="txthdg" value="320"/>
+                SPD:<input type="text" id="txtspd" value="95"/><br/>
+                ALT:<input type="text" id="txtalt" value="2500"/>
+                G:<input type="text" id="txtacc" value="1"/>
+                <input type="submit" id="btnfire" onclick="btnfire_click()" value="FIRE" />
             </div>
           <div id="debugpanel"></div>
-          <div id="gotodialog" class="dialogbox">
+          <div id="gotodialog" class="dialogbox defaulthidden">
             <div id="gotopanel" class="tightform">
               DEST ID:<input type="text" id="txtgoto" onkeyup="txtgoto_keyup()" /><br />
                 <select id="lstairports" class="listbox" size="10" /><br />
               <input type="submit" id="btnnavigate" onclick="btnnavigate_click()" value="Navigate" /><input type="submit" id="btngotocancel" onclick="btngotocancel_click()" value="Cancel" />
             </div>
           </div>
+            <div id="weaksignaldialog" class="dialogbox defaulthidden tightform">
+                <span class="bigred">GPS/GEOLOCATION SIGNAL TOO WEAK FOR NAVIGATION</span>
+            </div>
         </div>
     </body>
 </html>
