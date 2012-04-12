@@ -40,7 +40,7 @@ div.dialogbox{
     padding: 10px;
     z-index: auto;
     position: absolute;
-    top: 0; left: 0;
+    top: 50%; left: 50%;
     margin: auto;
 }
 

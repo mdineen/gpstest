@@ -13,12 +13,12 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
     I add this comment as this will be the first touch from VS11.  Hope it's awesome.
 */
 
-//The magic method.  This guy fires every time the GPS gives us new data.  We update the current and last values in
-// the instance instance (get it?), and paint our nav UI.
-function onSuccess(position) {
+    //The magic method.  This guy fires every time the GPS gives us new data.  We update the current and last values in
+    // the instance instance (get it?), and paint our nav UI.
+    function onSuccess(position) {
         //clear weak signal dialog
-        if (instance.ctrl.weaksignaldialog.style.visibility == 'visible')
-        { instance.ctrl.weaksignaldialog.style.visibility = 'hidden'; }
+        if (instance.ctrl.weaksignaldialog.style.visibility == "visible")
+        { hideDialog(instance.ctrl.weaksignaldialog); }
         //Update the instance
         instance.nav.lastalt = instance.nav.alt != null ? instance.nav.alt : (position.coords.altitude * 3.2808).toFixed(0);
         instance.nav.alt = (position.coords.altitude * 3.2808).toFixed(0);
@@ -110,7 +110,10 @@ function onSuccess(position) {
 		    //update the log size label
             instance.ctrl.lbllogsize.innerHTML = instance.nav.tracklog.length.toString() + " item(s)"
 		}
-	}
+
+        //set last success
+		instance.nav.lastsuccess = true;
+    }
 
     //Yeah baby.  This is the g load.  I can't wait to test this on the real me.  I told Rob he could learn to fly
     // aerobatics in the Lark and we could test this together.  Maybe it would be better to send him up with Rudy,
@@ -146,7 +149,12 @@ function onSuccess(position) {
 
     function onError(error)
     {
-        instance.ctrl.weaksignaldialog.style.visibility = "visible";
+        //only show the div if the state has changed
+        if (instance.nav.lastsuccess)
+        { popDialog(instance.ctrl.weaksignaldialog); }
+
+        //set lastsuccess false - it did not success last time
+        instance.nav.lastsuccess = false;
     }
 
 	//register for ready
@@ -208,7 +216,7 @@ function onSuccess(position) {
     function btnGoTo_click()
 	{
         helpers.paintlistcode("");
-        instance.ctrl.gotodialog.style.visibility = "visible";
+        popDialog(instance.ctrl.gotodialog);
         instance.ctrl.txtgoto.value = "";
         instance.ctrl.txtgoto.disabled = false;
         instance.ctrl.txtgoto.focus();
@@ -217,7 +225,7 @@ function onSuccess(position) {
     function btnNrst_click()
     {
         helpers.paintlistnearest();
-        instance.ctrl.gotodialog.style.visibility = "visible";
+        popDialog(instance.ctrl.gotodialog);
         instance.ctrl.txtgoto.value = "";
         instance.ctrl.txtgoto.disabled = true;
     }
@@ -242,12 +250,12 @@ function onSuccess(position) {
             instance.nav.originlat = instance.nav.lat;
             instance.nav.originlon = instance.nav.lon;
 		}
-        instance.ctrl.gotodialog.style.visibility = "hidden";
+        hideDialog(instance.ctrl.gotodialog);
 	}
 
 	function btngotocancel_click()
 	{
-        instance.ctrl.gotodialog.style.visibility = "hidden";
+        hideDialog(instance.ctrl.gotodialog);
 	}
 
     function txtgoto_keyup()
@@ -311,4 +319,10 @@ function onSuccess(position) {
 
         //toggle text on button
         instance.ctrl.btnsimboxtoggle.value = instance.ctrl.btnsimboxtoggle.value == "SHOW SIM" ? "HIDE SIM" : "SHOW SIM";
+    }
+
+    function btnackweaksignal_click()
+    {
+        //hide the div
+        hideDialog(instance.ctrl.weaksignaldialog);
     }

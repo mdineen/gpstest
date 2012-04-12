@@ -20,6 +20,7 @@
     <script src="Helpers/airportdata.searchcode.js"></script>
     <script src="Helpers/paintlist.js"></script>
     <script src="Helpers/getcrosstrack.js"></script>
+    <script src="Helpers/dialog.js"></script>
 
     <LINK REL="StyleSheet" HREF="default.css" TYPE="text/css" />
 	</head>
@@ -136,7 +137,8 @@
             </div>
             </div>
             <div id="weaksignaldialog" class="dialogbox defaulthidden">
-                <span class="bigred">GPS/GEOLOCATION SIGNAL<br />TOO WEAK FOR NAVIGATION</span>
+                <span class="bigred">GPS/GEOLOCATION SIGNAL<br />TOO WEAK FOR NAVIGATION</span><br />
+                <input type="submit" id="btnackweaksignal" onclick="btnackweaksignal_click()" value="ACKNOWLEDGE" />
             </div>
         </div>
     </body>

@@ -57,6 +57,8 @@ function main()
         this.btnsimboxtoggle = document.getElementById("btnsimboxtoggle");
         //Dialog box for weak signal
         this.weaksignaldialog = document.getElementById("weaksignaldialog");
+        //acknowledge button for weak signal dialog
+        this.btnackweaksignal = document.getElementById("btnackweaksignal");
     };
     this.nav = function()
     {
@@ -96,6 +98,8 @@ function main()
         this.logging = null;
         //object for current log
         this.tracklog = [];
+        //was the last request successful
+        this.lastsuccess = true;
     };
 }
 
