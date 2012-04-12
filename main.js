@@ -24,16 +24,17 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
         instance.nav.alt = (position.coords.altitude * 3.2808).toFixed(0);
         instance.nav.lasttimestamp = instance.nav.timestamp != null ? instance.nav.timestamp : new Date(position.timestamp);
         instance.nav.timestamp = new Date(position.timestamp);
-        //This was a little trying until I remembered that we're basically talking the DST triangle.  I wans S, and I
-        // need D and T.  S is in ft/min.  So, put ft over min
-        var ft = instance.nav.alt - instance.nav.lastalt; //how many feet of altitude did I climb/descent since last time I got data?
-        var min = (instance.nav.timestamp.getTime()/60000) - (instance.nav.lasttimestamp.getTime()/60000); //how long since I last got data?
-        instance.nav.vs = parseFloat(ft / (min == 0 ? 1 : min)).toFixed(0); //ft over min
         instance.nav.lat = position.coords.latitude;
         instance.nav.lon = position.coords.longitude;
         instance.nav.v = Math.round(helpers.getdeclination(instance.nav.lat, instance.nav.lon));
 		instance.nav.hdg = Math.round(position.coords.heading) + instance.nav.v;
         instance.nav.spd = Math.round(position.coords.speed * 1.94384449); // m/s to kt factor.
+
+        //Vertical Speed - This was a little trying until I remembered that we're basically talking the DST triangle.  I wans S, and I
+        // need D and T.  S is in ft/min.  So, put ft over min
+        var ft = instance.nav.alt - instance.nav.lastalt; //how many feet of altitude did I climb/descent since last time I got data?
+        var min = (instance.nav.timestamp.getTime() / 60000) - (instance.nav.lasttimestamp.getTime() / 60000); //how long since I last got data?
+        instance.nav.vs = parseFloat(ft / (min == 0 ? 1 : min)).toFixed(0); //ft over min
 
 	    //blarg!!  My BB handhelds don't give heading (hehe) or speed.  Gotta figure it out by using this and last position
 		if(!isNaN(instance.nav.hdg))
