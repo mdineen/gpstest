@@ -20,7 +20,7 @@ Main.js.  This all used to be in the index.html file (along with all the stuff i
         if (instance.ctrl.weaksignaldialog.style.visibility == "visible")
         { hideDialog(instance.ctrl.weaksignaldialog); }
         //Update the instance
-        instance.nav.lastalt = instance.nav.alt != null ? instance.nav.alt : (position.coords.altitude * 3.2808).toFixed(0);
+        instance.nav.lastalt = instance.nav.alt != null ? instance.nav.alt : (position.coords.altitude * 3.2808).toFixed(0); //3.2808 is meters to feet
         instance.nav.alt = (position.coords.altitude * 3.2808).toFixed(0);
         instance.nav.lasttimestamp = instance.nav.timestamp != null ? instance.nav.timestamp : new Date(position.timestamp);
         instance.nav.timestamp = new Date(position.timestamp);
