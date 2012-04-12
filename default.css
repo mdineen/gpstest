@@ -1,43 +1,47 @@
+body {
+    background-color: #808080;
+}
+
 div {
 	font-family: Arial, Helvetica;
 	font-size: 16pt;
 	color: black;
-	text-align: center;
-	vertical-align: middle;
+    text-align: center;
+    background-color: white;
+    margin: auto;
 }
 
-.title {
-	font-size: 10pt;
-}
-
-div.navtile{
+table.navpanel {
     width: 100%;
-    height: auto;
+    padding: 2px;
 }
 
 td.navtile{
     width: 33%;
-    height: auto;
+}
+
+div.topcontainer{
+    width: 40%;
+	max-width: 640px;
+}
+
+div.navtile{
+    width: 100%;
 }
 
 div.borders{
 	border: 3px solid black;
     width: 100%; 
-    height: fit-content;
 }
 
 div.dialogbox{
 	border: 2px solid black; 
-	margin-left: auto;
-	margin-right: auto;
-	width: auto;
-	height:fill-available;
-    top: 0;
-	position: absolute;
-	z-index: 1;
-	background-color: white;
-	text-align: center;
-	vertical-align: middle;
+    background-color: white;
+    padding: 10px;
+    z-index: auto;
+    position: absolute;
+    top: 0; left: 0;
+    margin: auto;
 }
 
 div.tightform{
@@ -52,30 +56,6 @@ select.listbox{
     visibility: hidden;
 }
 
-body {
-    text-align: center;
-}
-
-.topcontainer{
-    width: 40%;
-    margin-left: auto;
-	margin-right: auto;
-	width: 50em;
-	text-align: left;
-}
-
-.innercontainer {
-    width: 100%; 
-    height: auto;
-}
-
-table.navpanel {
-    width: 100%;
-    height: auto;
-    table-layout: auto;
-    padding: 0px;
-}
-
 .smaller {
     font-size: 8pt;
 }
@@ -88,3 +68,8 @@ table.navpanel {
     font-size: 18pt;
     color: red;
 }
+
+.title {
+	font-size: 10pt;
+}
+

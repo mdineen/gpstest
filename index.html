@@ -29,7 +29,7 @@
                 <span class="title">DEST:</span>
                 <div id="lbldest">---</div>
             </div>
-            <div id="navscreen" class="innercontainer">
+            <div id="navscreen" class="borders">
                 <table class="navpanel">
                     <tr>
                         <td class="navtile">
@@ -128,16 +128,15 @@
                 G:<input type="text" id="txtacc" value="1"/>
                 <input type="submit" id="btnfire" onclick="btnfire_click()" value="FIRE" />
             </div>
-          <div id="debugpanel"></div>
-          <div id="gotodialog" class="dialogbox defaulthidden">
+            <div id="gotodialog" class="dialogbox defaulthidden">
             <div id="gotopanel" class="tightform">
-              DEST ID:<input type="text" id="txtgoto" onkeyup="txtgoto_keyup()" /><br />
+                DEST ID:<input type="text" id="txtgoto" onkeyup="txtgoto_keyup()" /><br />
                 <select id="lstairports" class="listbox" size="10" /><br />
-              <input type="submit" id="btnnavigate" onclick="btnnavigate_click()" value="Navigate" /><input type="submit" id="btngotocancel" onclick="btngotocancel_click()" value="Cancel" />
+                <input type="submit" id="btnnavigate" onclick="btnnavigate_click()" value="Navigate" /><input type="submit" id="btngotocancel" onclick="btngotocancel_click()" value="Cancel" />
             </div>
-          </div>
-            <div id="weaksignaldialog" class="dialogbox defaulthidden tightform">
-                <span class="bigred">GPS/GEOLOCATION SIGNAL TOO WEAK FOR NAVIGATION</span>
+            </div>
+            <div id="weaksignaldialog" class="dialogbox defaulthidden">
+                <span class="bigred">GPS/GEOLOCATION SIGNAL<br />TOO WEAK FOR NAVIGATION</span>
             </div>
         </div>
     </body>

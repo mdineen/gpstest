@@ -21,8 +21,6 @@ function main()
         this.lblete = document.getElementById("lblete");
         //Altitude label
         this.lblalt = document.getElementById("lblalt");
-        //Debug output panel on main form (will be deprecated)
-        this.debugpanel = document.getElementById("debugpanel");
         //Dialog box for the "GOTO" feature
         this.gotodialog = document.getElementById("gotodialog");
         //Input box for alpha searching on the "GOTO" dialog form
