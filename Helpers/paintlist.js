@@ -7,22 +7,22 @@ These are UI helpers for the two methods to list airports in the v1 app.  For th
 
 //This guy gets called on the onKeyUp event of the search text box.  He finds airports that you could possibly mean
 // and puts just enough in your results box so you don't have to scroll
-helpers.paintlistcode = function(s) {
-    var apts = airportdata.searchcode(s, instance.ctrl.lstairports.size);
-    helpers.paintlist(apts);
+helpers.paintListCode = function(s) {
+    var apts = airportData.searchcode(s, instance.ctrl.lstAirports.size);
+    helpers.paintList(apts);
 }
 //This fella lists the nearest airports.  He goes 15x15.  Maybe that's what I should do for the variance method...
-helpers.paintlistnearest = function()
+helpers.paintListNearest = function()
 {
     var nrst = {};
     //To avoid immediate calls to the nearest method with a 1000-mile radius, we start at 15nm and go out by 15nm per loop until
     // we fill that airports list.  Woohoo!
     for(var i = 15; i < 1000; i += 15)
     {
-        nrst = helpers.getnearestlatlon(instance.nav.lat, instance.nav.lon, i);
+        nrst = helpers.getNearestLatLon(instance.nav.lat, instance.nav.lon, i);
         //this is a call to my potentially evil extension method on the mighty Object.  Looking for commentary from
         // Mike L on this one...
-        if (Object.size(nrst) >= instance.ctrl.lstairports.size)
+        if (Object.size(nrst) >= instance.ctrl.lstAirports.size)
         { break; } //stop trying after you have at least a whole page fold in the results
     }
 
@@ -34,26 +34,23 @@ helpers.paintlistnearest = function()
         apts.push(nrst[n]);
     }
 
-    helpers.paintlist(apts);
+    helpers.paintList(apts);
 }
-helpers.paintlist = function(apts)
+helpers.paintList = function(apts)
 {
     // loop through the arg, which is an array of airport codes sent to us in the order we are to paint them.
     for (var i = 0; i < apts.length; ++i) {
         var n = new Option();
-        //What do we really want to know here?  I wanna know what the code is, 'cause pilots are cool like that.  I
-        // want to know what the name is because the codes are really hard to remember.  Trust me, I stumped ATC with
-        // one once.  But seriously, who doesn't know CPC3??  Home of the biggest glider fleet in Canada!  Booya.
-        // Anyway, these comments are starting to get a little like actually talking to me, I should get back to it.
-        // Then, I really want to know how far it is.  Other than the bearing in degrees, which wouldn't really be all
+        //What do we really want to know here?  I wanna know what the code is, what the name how far it is.  
+        // Other than the bearing in degrees, which wouldn't really be all
         // that useful in a pinch (unless you're facing weather... hmm, think about that some more) that's all I care
         // about.  If I'm up north and I'm running low on gas maybe the ETE at current speed.
-        n.text = apts[i] + " - " + airportdata[apts[i]].Name + " (" + helpers.getdistance(instance.nav.lat, instance.nav.lon,
-            airportdata[apts[i]].Lat, airportdata[apts[i]].Lon).toFixed(2) + " NM)";
+        n.text = apts[i] + " - " + airportData[apts[i]].Name + " (" + helpers.getDistance(instance.nav.lat, instance.nav.lon,
+            airportData[apts[i]].Lat, airportData[apts[i]].Lon).toFixed(2) + " NM)";
         n.value = apts[i];
-        instance.ctrl.lstairports.options[i] = n;
+        instance.ctrl.lstAirports.options[i] = n;
     }
     //If there's something to select, select it man!!
     if(apts.length > 0)
-    { instance.ctrl.lstairports.selectedIndex = 0; }
+    { instance.ctrl.lstAirports.selectedIndex = 0; }
 }

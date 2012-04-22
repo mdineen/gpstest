@@ -1,5 +1,5 @@
 ﻿/*
-Object definition for airportdata.js data
+Object definition for airportData.js data
  */
 function airport(Code,Name,Lat,Lon,Elev,Decl){
 	//Code is the 3 or 4 digit ICAO code for the aerodrome

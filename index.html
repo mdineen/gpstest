@@ -7,19 +7,19 @@
     <script src="Entities/airport.js"></script>
     <script src="Entities/point.js"></script>
     <script src="Entities/top.js"></script>
-    <script src="Data/airportdata.js"></script>
-    <script src="Data/latloncode.js"></script>
+    <script src="Data/airportData.js"></script>
+    <script src="Data/latlonCode.js"></script>
     <script src="main.js"></script>
-    <script src="Helpers/degreeslongitudepermile.js"></script>
+    <script src="Helpers/degreesLongitudePerMile.js"></script>
     <script src="Helpers/maths.js"></script>
-    <script src="Helpers/getnearest.js"></script>
-    <script src="Helpers/getdistance.js"></script>
-    <script src="Helpers/getdeclination.js"></script>
+    <script src="Helpers/getNearest.js"></script>
+    <script src="Helpers/getDistance.js"></script>
+    <script src="Helpers/getDeclination.js"></script>
     <script src="Helpers/getheading.js"></script>
-    <script src="Helpers/simulatetravel.js"></script>
-    <script src="Helpers/airportdata.searchcode.js"></script>
-    <script src="Helpers/paintlist.js"></script>
-    <script src="Helpers/getcrosstrack.js"></script>
+    <script src="Helpers/simulateTravel.js"></script>
+    <script src="Helpers/airportData.searchcode.js"></script>
+    <script src="Helpers/paintList.js"></script>
+    <script src="Helpers/getCrossTrack.js"></script>
     <script src="Helpers/dialog.js"></script>
 
     <LINK REL="StyleSheet" HREF="default.css" TYPE="text/css" />
@@ -28,7 +28,7 @@
         <div id="main" class="topcontainer">
             <div id="destinfo" class="borders">
                 <span class="title">DEST:</span>
-                <div id="lbldest">---</div>
+                <div id="lblDest">---</div>
             </div>
             <div id="navscreen" class="borders">
                 <table class="navpanel">
@@ -36,19 +36,19 @@
                         <td class="navtile">
                             <div id="navhdgtile" class="borders navtile">
                                 <span class="title">HEADING</span><br/>
-                                <div id="lblhdg">---&deg;</div>
+                                <div id="lblHdg">---&deg;</div>
                             </div>
                         </td>
                         <td class="navtile">
                             <div id="navbrgtile" class="borders navtile">
                                 <span class="title">BEARING</span><br/>
-                                <div id="lblbrg">---&deg;</div>
+                                <div id="lblBrg">---&deg;</div>
                             </div>
                         </td>
                         <td class="navtile">
                             <div id="navspdtile" class="borders navtile">
                                 <span class="title">GROUND SPEED</span><br/>
-                                <div id="lblspd">0 kt</div>
+                                <div id="lblSpd">0 kt</div>
                             </div>
                         </td>
                     </tr>
@@ -56,19 +56,19 @@
                         <td class="navtile">
                             <div id="navdisttile" class="borders navtile">
                                 <span class="title">DISTANCE NEXT</span><br/>
-                                <div id="lbldist">0 nm</div>
+                                <div id="lblDist">0 nm</div>
                             </div>
                         </td>
                         <td class="navtile">
                             <div id="navetetile" class="borders navtile">
                                 <span class="title">ETE NEXT</span><br/>
-                                <div id="lblete">00:00:00</div>
+                                <div id="lblEte">00:00:00</div>
                             </div>
                         </td>
                         <td class="navtile">
                             <div id="navalttile" class="borders navtile">
                                 <span class="title">ALTITUDE</span><br/>
-                                <div id="lblalt">0 ft</div>
+                                <div id="lblAlt">0 ft</div>
                             </div>
                         </td>
                     </tr>
@@ -76,19 +76,19 @@
                         <td class="navtile">
                             <div id="navxtktile" class="borders navtile">
                                 <span class="title">X-TRACK</span><br/>
-                                <div id="lblxtk">0 nm</div>
+                                <div id="lblXtk">0 nm</div>
                             </div>
                         </td>
                         <td class="navtile">
                             <div id="navacctile" class="borders navtile">
                                 <span class="title">ACCELERATION</span><br/>
-                                <div id="lblacc">1 g</div>
+                                <div id="lblAcc">1 g</div>
                             </div>
                         </td>
                         <td class="navtile">
                             <div id="navvsitile" class="borders navtile">
                                 <span class="title">VERTICAL SPEED</span><br/>
-                                <div id="lblvsi">0 ft/min</div>
+                                <div id="lblVsi">0 ft/min</div>
                             </div>
                         </td>
                     </tr>
@@ -96,20 +96,20 @@
                         <td class="navtile">
                             <div id="navlcltimetile" class="borders navtile">
                                 <span class="title">LCL TIME</span><br/>
-                                <div id="lbllcltime">&nbsp;</div>
+                                <div id="lblLclTime">&nbsp;</div>
                             </div>
                         </td>
                         <td class="navtile">
                             <div id="navutctimetile" class="borders navtile">
                                 <span class="title">UTC TIME</span><br/>
-                                <div id="lblutctime">&nbsp;</div>
+                                <div id="lblUtcTime">&nbsp;</div>
                             </div>
                         </td>
                         <td class="navtile">
                             <div id="logtile" class="borders navtile">
                                 <span class="title">LOGGER</span><br />
-                                <input type="submit" id="btnlog" onclick="btnlog_click()" value="START" /><input type="submit" id="btnupload" onclick="btnupload_click()" value="UPLOAD" />
-                                <div id="lbllogsize" class="smaller" />
+                                <input type="submit" id="btnLog" onclick="btnLog_click()" value="START" /><input type="submit" id="btnUpload" onclick="btnUpload_click()" value="UPLOAD" />
+                                <div id="lblLogSize" class="smaller" />
                             </div>
                         </td>
                     </tr>
@@ -119,26 +119,26 @@
                 <input type="submit" id="btnGoTo" onclick="btnGoTo_click()" value="GO TO" />
                 <input type="submit" id="btnNrst" onclick="btnNrst_click()" value="NRST" />
                 <input type="submit" id="btnStop" onclick="btnStop_click()" value="STOP" />
-                <input type="submit" id="btnsimboxtoggle" onclick="btnsimboxtoggle_click()" value="SHOW SIM" />
+                <input type="submit" id="btnSimBoxToggle" onclick="btnSimBoxToggle_click()" value="SHOW SIM" />
             </div>
-            <div id="simboxtile" class="borders navtile defaulthidden simboxtext">
+            <div id="simBoxTile" class="borders navtile defaulthidden simboxtext">
                 <span class="title">SIM CONTROL</span><br/>
-                HDG:<input type="text" id="txthdg" value="320"/>
-                SPD:<input type="text" id="txtspd" value="95"/><br/>
-                ALT:<input type="text" id="txtalt" value="2500"/>
-                G:<input type="text" id="txtacc" value="1"/>
+                HDG:<input type="text" id="txtHdg" value="320"/>
+                SPD:<input type="text" id="txtSpd" value="95"/><br/>
+                ALT:<input type="text" id="txtAlt" value="2500"/>
+                G:<input type="text" id="txtAcc" value="1"/>
                 <input type="submit" id="btnfire" onclick="btnfire_click()" value="FIRE" />
             </div>
-            <div id="gotodialog" class="dialogbox defaulthidden">
+            <div id="gotoDialog" class="dialogbox defaulthidden">
             <div id="gotopanel" class="tightform">
-                DEST ID:<input type="text" id="txtgoto" onkeyup="txtgoto_keyup()" /><br />
-                <select id="lstairports" class="listbox" size="10" /><br />
+                DEST ID:<input type="text" id="txtGoto" onkeyup="txtGoto_keyup()" /><br />
+                <select id="lstAirports" class="listbox" size="10" /><br />
                 <input type="submit" id="btnnavigate" onclick="btnnavigate_click()" value="Navigate" /><input type="submit" id="btngotocancel" onclick="btngotocancel_click()" value="Cancel" />
             </div>
             </div>
-            <div id="weaksignaldialog" class="dialogbox defaulthidden">
+            <div id="weakSignalDialog" class="dialogbox defaulthidden">
                 <span class="bigred">GPS/GEOLOCATION SIGNAL<br />TOO WEAK FOR NAVIGATION</span><br />
-                <input type="submit" id="btnackweaksignal" onclick="btnackweaksignal_click()" value="ACKNOWLEDGE" />
+                <input type="submit" id="btnAckWeakSignal" onclick="btnAckWeakSignal_click()" value="ACKNOWLEDGE" />
             </div>
         </div>
     </body>

@@ -8,57 +8,57 @@ function main()
     {
         //Controls on the main nav form and sim box
         //Destination label
-        this.lbldest = document.getElementById("lbldest");
+        this.lblDest = document.getElementById("lblDest");
         //Heading label
-        this.lblhdg = document.getElementById("lblhdg");
+        this.lblHdg = document.getElementById("lblHdg");
         //Bearing to next label
-        this.lblbrg = document.getElementById("lblbrg");
+        this.lblBrg = document.getElementById("lblBrg");
         //Groundspeed label
-        this.lblspd = document.getElementById("lblspd");
+        this.lblSpd = document.getElementById("lblSpd");
         //Distance to next label
-        this.lbldist = document.getElementById("lbldist");
+        this.lblDist = document.getElementById("lblDist");
         //ETE to next label
-        this.lblete = document.getElementById("lblete");
+        this.lblEte = document.getElementById("lblEte");
         //Altitude label
-        this.lblalt = document.getElementById("lblalt");
+        this.lblAlt = document.getElementById("lblAlt");
         //Dialog box for the "GOTO" feature
-        this.gotodialog = document.getElementById("gotodialog");
+        this.gotoDialog = document.getElementById("gotoDialog");
         //Input box for alpha searching on the "GOTO" dialog form
-        this.txtgoto = document.getElementById("txtgoto");
+        this.txtGoto = document.getElementById("txtGoto");
         //List of airports to display - multiline select html control - need to switch to jquery to stop BB browser behaviour
-        this.lstairports = document.getElementById("lstairports");
+        this.lstAirports = document.getElementById("lstAirports");
         //Cross track distance label
-        this.lblxtk = document.getElementById("lblxtk");
+        this.lblXtk = document.getElementById("lblXtk");
         //sim box
-        this.simboxtile = document.getElementById("simboxtile");
+        this.simBoxTile = document.getElementById("simBoxTile");
         //Altitude text box from sim box
-        this.txtalt = document.getElementById("txtalt");
+        this.txtAlt = document.getElementById("txtAlt");
         //Heading text box from sim box
-        this.txthdg = document.getElementById("txthdg");
+        this.txtHdg = document.getElementById("txtHdg");
         //Groundspeed text box from sim box
-        this.txtspd = document.getElementById("txtspd");
+        this.txtSpd = document.getElementById("txtSpd");
         //Accelerometer (g-meter) label
-        this.lblacc = document.getElementById("lblacc");
+        this.lblAcc = document.getElementById("lblAcc");
         //Acceleration text box from sim box
-        this.txtacc = document.getElementById("txtacc");
+        this.txtAcc = document.getElementById("txtAcc");
         //VSI (vertical speed indicator) label
-        this.lblvsi = document.getElementById("lblvsi");
+        this.lblVsi = document.getElementById("lblVsi");
         //Local time label
-        this.lbllcltime = document.getElementById("lbllcltime");
+        this.lblLclTime = document.getElementById("lblLclTime");
         //UTC time label
-        this.lblutctime = document.getElementById("lblutctime");
+        this.lblUtcTime = document.getElementById("lblUtcTime");
         //logging button
-        this.btnlog = document.getElementById("btnlog");
+        this.btnLog = document.getElementById("btnLog");
         //upload log button
-        this.btnupload = document.getElementById("btnupload");
+        this.btnUpload = document.getElementById("btnUpload");
         //log size label
-        this.lbllogsize = document.getElementById("lbllogsize");
+        this.lblLogSize = document.getElementById("lblLogSize");
         //toggle sim box button
-        this.btnsimboxtoggle = document.getElementById("btnsimboxtoggle");
+        this.btnSimBoxToggle = document.getElementById("btnSimBoxToggle");
         //Dialog box for weak signal
-        this.weaksignaldialog = document.getElementById("weaksignaldialog");
+        this.weakSignalDialog = document.getElementById("weakSignalDialog");
         //acknowledge button for weak signal dialog
-        this.btnackweaksignal = document.getElementById("btnackweaksignal");
+        this.btnAckWeakSignal = document.getElementById("btnAckWeakSignal");
     };
     this.nav = function()
     {
@@ -83,23 +83,23 @@ function main()
         //destination airport code
         this.dest = null;
         //destination position (float)
-        this.destlat = null;
-        this.destlon = null;
+        this.destLat = null;
+        this.destLon = null;
         //position at time of navigation start
-        this.originlat = null;
-        this.originlon = null;
+        this.originLat = null;
+        this.originLon = null;
         //previous altitude (for vertical speed calculation, set from previous value for this.alt)
-        this.lastalt = null;
+        this.lastAlt = null;
         //current GPS timestamp
         this.timestamp = null;
         //previous GPS timestamp (for time-related calculations, time since last GPS position/altitude)
-        this.lasttimestamp = null;
+        this.lastTimestamp = null;
         //bool for logging
         this.logging = null;
         //object for current log
         this.tracklog = [];
         //was the last request successful
-        this.lastsuccess = true;
+        this.lastSuccess = true;
     };
 }
 

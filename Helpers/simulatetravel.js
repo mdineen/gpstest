@@ -1,12 +1,10 @@
 ﻿/*
-It's worth noting that this was the only file that had comments in it that weren't qualifying one little statment.
- Not bad, 1 out of like 20.  So, Dan said he would consider adding this feature to Ripple.  I might do that in a little
- bit myself actually, and the ability to replay a GPX file.  Until then, this little method will allow us to make believe.
+This little method will allow us to make believe that we are flying.
  This guy is invoked by the "FIRE" button and simulates travel at the settings found in the sim box for 5 minutes.  This
  also works a treat on the actual devices.
  */
 //simulates travel for 5 minutes at the values specified in the sim box
-helpers.simulatetravel = function(lat, lon, hdg, dist)
+helpers.simulateTravel = function(lat, lon, hdg, dist)
 {
 	var lat1 = helpers.rad(lat), lon1 = helpers.rad(lon), brng = helpers.rad(hdg), angularDistance = dist / instance.R;
 	var lat2 = Math.asin(Math.sin(lat1) * Math.cos(angularDistance) + Math.cos(lat1) * Math.sin(angularDistance) * Math.cos(brng));

@@ -1,7 +1,7 @@
 /*
 two objects keyed by the float value of their latitude and longitude respectively.  For use in the getNearest() function, very fast.
  */
-var latcode = {
+var latCode = {
 	'05.88333' : "P16",
 	'13.48361' : "GUM",
 	'13.58389' : "UAM",
@@ -14984,7 +14984,7 @@ var latcode = {
 	'82.51778' : "CYLT",
 }
 
- var loncode = {
+ var lonCode = {
 	'-177.38110' : "MDY",
 	'-176.64580' : "ADK",
 	'-174.20610' : "AKA",
